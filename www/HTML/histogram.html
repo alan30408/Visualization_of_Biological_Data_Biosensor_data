@@ -1,0 +1,19 @@
+<!--
+ * @author Marco Schaefer 
+ * @author Mathias Witte Paz
+ *  
+-->
+
+{% extends "base.html" %}
+{% block content %}
+
+<script type="text/javascript" >
+    // 'data' returned from function "histogram" in flaskServer.py
+    // will be accessed from 'histogram.js'
+    dataset = {{ data | safe }};
+</script>
+
+
+<script src="{{ url_for('static', filename='histogram.js') }}"></script>
+
+{% endblock %}

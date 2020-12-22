@@ -1,0 +1,16 @@
+body{
+    background-color: rgb(172, 172, 172); 
+}
+
+table{
+    border: 1px solid ;
+    text-align: center;
+    background-color: rgb(238, 238, 238); 
+
+}
+
+td{
+    border: 1px solid ;
+    width: 120px;
+    align: center;
+}
