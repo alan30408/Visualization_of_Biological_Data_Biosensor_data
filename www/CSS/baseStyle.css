@@ -1,3 +1,5 @@
+/* Project Biosensors */
+
 body{
     background-color: rgb(172, 172, 172); 
 }
@@ -14,3 +16,33 @@ td{
     width: 120px;
     align: center;
 }
+
+body{
+    background-color: rgb(206, 232, 255); 
+  }
+  
+  .chart{
+    background-color: cornflowerblue;
+  }
+  
+  .bars{
+    fill: darkblue;
+    stroke-width: 1px;
+    stroke:black;
+    opacity: 0.5;
+  }
+  
+  .bars:hover{
+    fill: darkblue;
+    stroke-width: 1px;
+    stroke:black;
+    opacity: 0.8;
+  }
+  
+  #tooltip{
+    background-color: darkblue;
+    color: white;
+    position: relative;
+    stroke-width: 1px;
+  }
+  
