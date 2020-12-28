@@ -4,6 +4,11 @@
 dataset.splice(0,1); // leave out if dataset has no header
 console.log(dataset);
 
+// Specify columns to use later (To Do)
+//col1 = "Column1";
+//col2 = "Column2";
+
+
 // Dimensions of chart and margin
 var barHeight = 10;
 
@@ -22,11 +27,10 @@ let svg = d3.select("#barDiv")
      .attr("transform","translate(" + margin.left + "," + margin.top + ")");
 
 
-// Find minimum and maximum value for our y attribute, as well as the mean
+// Find minimum and maximum value for our y attribute, as well as the average
 let ymin = Infinity;
 let ymax = -Infinity;
 let sum = 0;
-
 
 for (row=0;row<dataset.length;row++){ 
      if(dataset[row].Column2 < ymin){
@@ -65,6 +69,7 @@ svg.append("text")
      .attr("y", chartHeight+margin.top+40) 
      .text("Label x [Unit]");
 
+
 // Add y axis with label        
 svg.append("g")
      .call(d3.axisLeft(scaleY));
@@ -74,6 +79,7 @@ svg.append("text")
      .attr("x",-40)
      .attr("y", -10)
      .text("Label y [Unit]");
+
 
 // Define tooltip and its functions
 let tooltip = d3.select("#tooltip")
@@ -115,11 +121,25 @@ svg.selectAll("bars")
 	  .on("mouseout",mouseOut)
 	  .on("click",mouseClick);
 
-// Add line at average 
-/*let myLine = svg.append("line")
+
+// Add line at average with legend
+let plotAvg = chartHeight*(ymax-avg)/(ymax-(ymin));
+let avgLine = svg.append("line")
+     .attr("class", "avgLine")
      .attr("x1",0)
-     .attr("y1", 100)
+     .attr("y1", plotAvg)
      .attr("x2", chartWidth)
-     .attr("y2", 100)
-     .attr("stroke-width",3)
-     .attr("stroke", "black");*/
+     .attr("y2", plotAvg);
+
+let legLine = svg.append("line")
+     .attr("class", "avgLine")
+     .attr("x1", chartWidth-130)
+     .attr("y1", -15)
+     .attr("x2", chartWidth-90)
+     .attr("y2", -15);
+
+svg.append("text")
+     .attr('x', (chartWidth-40))
+     .attr("y", -10)
+     .text("Average: "+ Math.round(avg))
+     .attr("text-anchor", "middle")

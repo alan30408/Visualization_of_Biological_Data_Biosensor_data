@@ -1,9 +1,5 @@
 /* Project Biosensors */
 
-body{
-    background-color: rgb(172, 172, 172); 
-}
-
 table{
     border: 1px solid ;
     text-align: center;
@@ -45,4 +41,9 @@ body{
     position: relative;
     stroke-width: 1px;
   }
+
+  .avgLine{
+    stroke-width: 2px;
+    stroke: darkblue;
+}
   
