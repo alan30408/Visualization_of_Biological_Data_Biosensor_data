@@ -37,7 +37,7 @@ def foo():
     timeIntervalEnd = request.args.get('timeIntervalEnd')
 
     data =  LoadingGeneralData.LoadGeneralData(variable, (timeIntervalStart, timeIntervalEnd))
-    return data = {"data": json.dumps(json.loads(data.to_json(orient = "records"))),
+    return {"data": json.dumps(json.loads(data.to_json(orient = "records"))),
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
