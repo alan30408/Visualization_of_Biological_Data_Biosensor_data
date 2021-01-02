@@ -2,7 +2,7 @@ from dateutil import parser
 import pandas as pd
 
 def PreprocessData():
-    
+    '''
     df = pd.read_csv('../../Data/Biosensors.csv')
     df['Time'] = pd.to_datetime(df['Time'], format='%Y-%m-%dT%H:%M:%SZ')
     df = df.set_index("Time")
@@ -31,7 +31,7 @@ def PreprocessData():
     print(dfTmp)
     dfTmp.to_csv('../../Data/biosensorWithAllData_v2.csv')
     #df = dfTmp
-    
+    '''
     df = pd.read_csv('../../Data/biosensorWithAllData_v2.csv')
     print(df)
     
@@ -59,7 +59,7 @@ def PreprocessData():
 
         currentTime = parser.parse(row.Time)
 
-        if (currentTime - start15).total_seconds() / 60.0 > 15:  #15 min interval
+        if (currentTime - start15).total_seconds() / 60.0 == 15:  #15 min interval
             df15tmpMean = df15tmp.mean()
             df15 = df15.append(pd.DataFrame([[start15, df15tmpMean.Calories, df15tmpMean.HR, df15tmpMean.Temperature, df15tmpMean.Steps]], columns
 =df15.columns))
@@ -71,7 +71,7 @@ def PreprocessData():
 =df15tmp.columns))
 
 
-        if (currentTime - start30).total_seconds() / 60.0 > 30:  #30 min interval
+        if (currentTime - start30).total_seconds() / 60.0 == 30:  #30 min interval
             df30tmpMean = df30tmp.mean()
             df30 = df30.append(pd.DataFrame([[start30, df30tmpMean.Calories, df30tmpMean.HR, df30tmpMean.Temperature, df30tmpMean.Steps]], columns
 =df30.columns))
@@ -83,7 +83,7 @@ def PreprocessData():
 =df30tmp.columns))
 
 
-        if (currentTime - start60).total_seconds() / 60.0 > 60:  #60 min interval
+        if (currentTime - start60).total_seconds() / 60.0 == 60:  #60 min interval
             df60tmpMean = df60tmp.mean()
             df60 = df60.append(pd.DataFrame([[start60, df60tmpMean.Calories, df60tmpMean.HR, df60tmpMean.Temperature, df60tmpMean.Steps]], columns
 =df60.columns))
@@ -94,9 +94,9 @@ def PreprocessData():
         df60tmp = df60tmp.append(pd.DataFrame([[row.Time, row.Calories, row.HR, row.Temperature, row.Steps]], columns
 =df60tmp.columns))
 
-    df15.to_csv('../../Data/15min.csv')
-    df30.to_csv('../../Data/30min.csv')
-    df60.to_csv('../../Data/60min.csv')
+    df15.to_csv('../../Data/15min_v2.csv')
+    df30.to_csv('../../Data/30min_v2.csv')
+    df60.to_csv('../../Data/60min_v2.csv')
 
 
-#PreprocessData()
+PreprocessData()
