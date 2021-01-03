@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+
+<script type="text/javascript" src="{{ url_for('static', filename='JS/LoadingData.js') }}"></script>
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function(event) {
+        data = LoadBaseData("HR", "2015-05-20", "2015-05-21");
+        document.getElementById("data").textContent = data;
+    });
+
+    function UpdateData()
+    {
+        variables = [];
+
+        checkboxCalories = document.getElementById('checkboxCalories');
+        checkboxHR = document.getElementById('checkboxHR');
+        checkboxTemperature = document.getElementById('checkboxTemperature');
+        checkboxSteps = document.getElementById('checkboxSteps');
+
+        dateStart = document.getElementById('dateStart');
+        dateEnd = document.getElementById('dateEnd');
+
+
+        if (checkboxCalories.checked) {
+            variables.push(checkboxCalories.value);
+        }
+
+        if (checkboxHR.checked) {
+            variables.push(checkboxHR.value);
+        }
+
+        if (checkboxTemperature.checked) {
+            variables.push(checkboxTemperature.value);
+        }
+
+        if (checkboxSteps.checked) {
+            variables.push(checkboxSteps.value);
+        }
+
+        console.log(variables);
+        console.log(dateStart.value);
+        console.log(dateEnd.value);
+
+        data = LoadBaseData(variables, dateStart.value, dateEnd.value);
+        document.getElementById("data").textContent = data;
+    }
+</script>
+
+
+<input type="checkbox" id="checkboxCalories" name="Calories" value="Calories">
+<label for="checkboxCalories"> Calories</label><br>
+
+<input type="checkbox" id="checkboxHR" name="HR" value="HR" checked>
+<label for="checkboxHR"> HR</label><br>
+
+<input type="checkbox" id="checkboxTemperature" name="Temperature" value="Temperature">
+<label for="checkboxTemperature"> Temperature</label><br>
+
+<input type="checkbox" id="checkboxSteps" name="Steps" value="Steps">
+<label for="checkboxSteps"> Steps</label><br>
+
+<input type="date" id="dateStart" value="2015-05-20"/>
+<input type="date" id="dateEnd" value="2015-05-21"/>
+
+<button onclick=UpdateData()>Update</button>
+
+<br/>
+<br/>
+<br/>
+
+<div id="data">
+</div>
+
+{% endblock %}

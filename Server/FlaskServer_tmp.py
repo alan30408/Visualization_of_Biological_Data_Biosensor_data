@@ -22,7 +22,7 @@ def index():
 
 @app.route('/base')
 def base():
-    return render_template('base.html')
+    return render_template('base_tmp.html')
 
 @app.route('/histogram')
 def histogram():
@@ -54,4 +54,4 @@ def bubbleChart():
     return render_template('www/HTML/bubbleChart.html', data=data)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=5001)

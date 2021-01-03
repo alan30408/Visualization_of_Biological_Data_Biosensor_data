@@ -1,8 +1,13 @@
+<!--
+ * @author Marco Schaefer 
+ * @author Mathias Witte Paz
+ *  
+-->
+
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/baseStyle.css') }}" >
-    <script type="text/javascript" src="{{ url_for('static', filename='JS/Helpers.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href= "{{ url_for('static', filename='baseStyle.css') }}" >
     <script src="https://d3js.org/d3.v6.min.js" charset="utf-8"></script>
     <title>Mysteri Flask Example</title>
 </head>
@@ -11,7 +16,9 @@
  
     <table>
         <tr>
-            <td ><li><a href="{{ url_for('testing') }}">Testing</a></li></td>
+            <td ><li><a href="{{ url_for('histogram') }}">Histogram</a></li></td>
+            <td ><li><a href="{{ url_for('dummy') }}">Dummy</a></li></td>
+			<td ><li><a href="{{ url_for('bubbleChart') }}">Bubble chart</a></li></td>
         </tr>
     </table>
     
