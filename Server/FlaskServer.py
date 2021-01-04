@@ -9,6 +9,7 @@ from flask import Flask, render_template, redirect, url_for, request, jsonify
 from random import randrange
 
 from Business.LoadingGeneralData import LoadingGeneralData
+loadingGeneralData = LoadingGeneralData()
 
 import pandas as pd
 import json
@@ -52,8 +53,8 @@ def LoadGeneralData():
     
     if "Time" not in variables:
         variables.insert(0, "Time")
-
-    data =  LoadingGeneralData.LoadGeneralData(variables, (timeIntervalStart, timeIntervalEnd))
+        
+    data = loadingGeneralData.LoadGeneralData(variables, (timeIntervalStart, timeIntervalEnd))
     return jsonify({"data": json.dumps(json.loads(data.to_json(orient = "records")))})
 
 if __name__ == '__main__':
