@@ -1,10 +1,5 @@
-<!--
- * @author Marco Schaefer 
- * @author Mathias Witte Paz
- *  
--->
 
-{% extends "base.html" %}
+{% extends "base_tmp.html" %}
 {% block content %}
 
 <script type="text/javascript" >
@@ -14,6 +9,7 @@
 </script>
 
 
-<script src="{{ url_for('static', filename='histogram.js') }}"></script>
+<script src="{{ url_for('static', filename='JS/bubbleChart.js') }}"></script>
+<script>showData()</script>
 
 {% endblock %}

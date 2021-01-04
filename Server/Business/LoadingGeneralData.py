@@ -3,11 +3,10 @@ import os
 import json
 
 class LoadingGeneralData:
-    def LoadGeneralData(variable, timeInterval):
-        print("||||||||||||||||||||||||||||||||||||||||||||||")
-        #print(os.path.dirname(os.path.realpath(__file__)))
-        #print(os.getcwd())
+    def __init__(self):
+        pass
 
+    def LoadGeneralData(self, variable, timeInterval):
         """
         Load general data
 
@@ -18,13 +17,7 @@ class LoadingGeneralData:
         fileName = "60min_v2.csv"
         df = pd.read_csv('Data/' + fileName)
 
-        print(variable)
-
         df['DateTime'] = pd.to_datetime(df['Time'])
         mask = (df['DateTime'] > timeInterval[0]) & (df['DateTime'] <= timeInterval[1])
 
         return df[variable].loc[mask]
-
-#data = LoadingGeneralData.LoadGeneralData(["Time", "HR"], ("2015-05-20 19:00:00", "2015-05-21 19:00:00"))
-#print(data)
-#print({"data": json.dumps(json.loads(data.to_json(orient = "records")))})
