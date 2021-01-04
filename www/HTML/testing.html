@@ -9,6 +9,7 @@
         document.getElementById("data").textContent = data;
     });
 
+    /*function to get the selection of the user*/
     function CountCheckboxes() {
         variables = [];
 
@@ -39,6 +40,7 @@
         return [variables, dateStart, dateEnd];
     }
 
+    /*update function to show general data*/
     function UpdateData()
     {
         values = CountCheckboxes();
@@ -53,6 +55,7 @@
         document.getElementById("data").textContent = data;
     }
 
+    /*load data and preprocess it for correlation*/
     function Correlate() {
         values = CountCheckboxes();
         variables = values[0];
