@@ -12,6 +12,10 @@
     <table>
         <tr>
             <td ><li><a href="{{ url_for('testing') }}">Testing</a></li></td>
+    
+            <td ><li><a href="{{ url_for('barChart') }}">Barchart</a></li></td>
+      
+            <td ><li><a href="{{ url_for('lineChart') }}">LineChart</a></li></td>
         </tr>
     </table>
     
@@ -20,6 +24,9 @@
     
     <!-- div for plot -->
     <div id="plot"></div>
+
+    <!-- div for tooltip-->
+    <div id="tooltip"></div>
     
     <!-- between block and endblock we will insert more html, js from other files -->
     {% block content %}

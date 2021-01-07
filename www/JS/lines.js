@@ -5,6 +5,9 @@
 dataset.splice(0,1); // leave out if dataset has no header
 console.log(dataset);
 
+// Specify columns that should be used as data for x and y
+colx = "Column1";
+coly = "Column2";
 
 // Dimensions of chart and margin
 var barHeight = 10;
@@ -15,7 +18,7 @@ const margin = {top: 30, right: 30, bottom: 80, left: 50};
 
 
 // Create SVG and place it correctly
-let svg = d3.select("#barDiv")
+let svg = d3.select("#plot")
      .append("svg")
      .attr("width", chartWidth + margin.left + margin.right)
      .attr("height", chartHeight + margin.top + margin.bottom)
@@ -30,18 +33,18 @@ let ymin = Infinity;
 let ymax = -Infinity;
 
 for (row=0;row<dataset.length;row++){ 
-     if(dataset[row].Column2 < ymin){
-          ymin = dataset[row].Column2
+     if(dataset[row][coly] < ymin){
+          ymin = dataset[row][coly]
      }
-     if(dataset[row].Column2 > ymax){
-          ymax = dataset[row].Column2
+     if(dataset[row][coly] > ymax){
+          ymax = dataset[row][coly]
      }
 }
 
 
 // Define axes
 let scaleX = d3.scaleBand()
-     .domain(dataset.map(function(d) { return d.Column1; }))
+     .domain(dataset.map(function(d) { return d[colx]; }))
      .range([0,chartWidth]);
 let scaleY = d3.scaleLinear()
      .domain([ymin-10, ymax])
@@ -78,7 +81,7 @@ svg.append("text")
 
 // Add line
 const lines = svg.selectAll("lines")
-    .data([dataset], function(d){return d.Column1});
+    .data([dataset], function(d){return d[coly]});
 
 lines
     .enter()
@@ -86,6 +89,6 @@ lines
     .attr("class", "avgLine")
     .merge(lines)
     .attr("d", d3.line()
-          .x(function(d){return scaleX(d.Column1);})
-          .y(function(d){return scaleY(d.Column2);}))
+          .x(function(d){return scaleX(d[colx]);})
+          .y(function(d){return scaleY(d[coly]);}))
           .attr("fill", "none");

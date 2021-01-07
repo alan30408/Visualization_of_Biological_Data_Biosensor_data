@@ -4,9 +4,9 @@
 dataset.splice(0,1); // leave out if dataset has no header
 console.log(dataset);
 
-// Specify columns to use later (To Do)
-//col1 = "Column1";
-//col2 = "Column2";
+// Specify columns that should be used as data for x and y
+colx = "Column1";
+coly = "Column2";
 
 
 // Dimensions of chart and margin
@@ -17,7 +17,7 @@ var chartHeight = dataset.length * barHeight;
 const margin = {top: 30, right: 30, bottom: 80, left: 50};
 
 // Create SVG and place it correctly
-let svg = d3.select("#barDiv")
+let svg = d3.select("#plot")
      .append("svg")
      .attr("width", chartWidth + margin.left + margin.right)
      .attr("height", chartHeight + margin.top + margin.bottom)
@@ -33,20 +33,20 @@ let ymax = -Infinity;
 let sum = 0;
 
 for (row=0;row<dataset.length;row++){ 
-     if(dataset[row].Column2 < ymin){
-          ymin = dataset[row].Column2
+     if(dataset[row][coly] < ymin){
+          ymin = dataset[row][coly]
      }
-     if(dataset[row].Column2 > ymax){
-          ymax = dataset[row].Column2
+     if(dataset[row][coly] > ymax){
+          ymax = dataset[row][coly]
      }
-     sum += parseInt(dataset[row].Column2)
+     sum += parseInt(dataset[row][coly])
 }
 let avg = sum/dataset.length;
 
 
 // Define axes
 let scaleX = d3.scaleBand()
-     .domain(dataset.map(function(d) { return d.Column1; }))
+     .domain(dataset.map(function(d) { return d[colx]; }))
      .range([0,chartWidth]);
 let scaleY = d3.scaleLinear()
      .domain([ymin-10, ymax])
@@ -81,6 +81,13 @@ svg.append("text")
      .text("Label y [Unit]");
 
 
+// Define diverging colorscale    
+var divColor = d3.scaleLinear()
+    .domain([ymin, avg, ymax])
+    .range(["purple", "white","orange"])
+    .interpolate(d3.interpolateRgb); 
+
+
 // Define tooltip and its functions
 let tooltip = d3.select("#tooltip")
 	.style("visibility", "hidden");
@@ -90,7 +97,7 @@ function mouseOver (event,d){
 	tooltip
           .style("visibility","visible")
           .style("width", "50px")
-		.text(d.Column2)
+		.text(d[coly])
 }
 
 function mouseOut (event,d){
@@ -113,10 +120,11 @@ svg.selectAll("bars")
      .enter()
      .append("rect")
        .attr("class", function(d) {return "bars"})
-       .attr("x", function(d){return scaleX(d.Column1);})
-       .attr("y", function(d) {return scaleY(d.Column2);})
+       .attr("x", function(d){return scaleX(d[colx]);})
+       .attr("y", function(d) {return scaleY(d[coly]);})
        .attr("width",scaleX.bandwidth())
-       .attr("height",function(d){return chartHeight - scaleY(d.Column2);})
+       .attr("height",function(d){return chartHeight - scaleY(d[coly]);})
+       .attr("fill", function(d) { return divColor(d[coly]);})
        .on("mouseover",mouseOver)
 	  .on("mouseout",mouseOut)
 	  .on("click",mouseClick);
