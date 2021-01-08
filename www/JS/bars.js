@@ -4,9 +4,15 @@
 dataset.splice(0,1); // leave out if dataset has no header
 console.log(dataset);
 
+dataset = LoadBaseData("HR", "2015-05-20", "2015-05-21");
+console.log(dataset);
+console.log(dataset["data"]);
+dataset = dataset["data"]
+
+
 // Specify columns that should be used as data for x and y
-colx = "Column1";
-coly = "Column2";
+colx = "Time";
+coly = "HR";
 
 
 // Dimensions of chart and margin

@@ -7,6 +7,9 @@ function LoadBaseData(variables, timeIntervalStart, timeIntervalEnd)
     timeIntervalEndUrl = "timeIntervalEnd="+timeIntervalEnd;
 
     url = baseUrl + variablesUrl + "&" + timeIntervalStartUrl + "&" + timeIntervalEndUrl;
-    return HttpGet(url);
+
+    data = HttpGet(url);
+    console.log(data);
+    return JSON.parse(data);
 }
 

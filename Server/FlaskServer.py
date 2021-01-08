@@ -56,7 +56,7 @@ def LoadGeneralData():
         variables.insert(0, "Time")
         
     data = loadingGeneralData.LoadGeneralData(variables, (timeIntervalStart, timeIntervalEnd))
-    return jsonify({"data": json.dumps(json.loads(data.to_json(orient = "records")))})
+    return json.dumps({"data": json.loads(data.to_json(orient = "records"))})
 
 # Momentarily with test data as I can't load data with LoadGeneralData
 inputPath = r'Data/ChartsTest.csv'
