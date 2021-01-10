@@ -14,7 +14,7 @@ class LoadingGeneralData:
         timeInterval: (start, end)
         """
 
-        fileName = "60min_v2.csv"
+        fileName = "60min_v3.csv"
         df = pd.read_csv('Data/' + fileName)
 
         df['DateTime'] = pd.to_datetime(df['Time'])

@@ -67,7 +67,8 @@ def PreprocessData():
             start15 = currentTime
             df15tmp = pd.DataFrame(columns=["Time", "Calories", "HR", "Temperature", "Steps"])
 
-        df15tmp = df15tmp.append(pd.DataFrame([[row.Time, row.Calories, row.HR, row.Temperature, row.Steps]], columns
+        if row.HR != 0 and row.Temperature != 0:
+            df15tmp = df15tmp.append(pd.DataFrame([[row.Time, row.Calories, row.HR, row.Temperature, row.Steps]], columns
 =df15tmp.columns))
 
 
@@ -79,7 +80,8 @@ def PreprocessData():
             start30 = currentTime
             df30tmp = pd.DataFrame(columns=["Time", "Calories", "HR", "Temperature", "Steps"])
 
-        df30tmp = df30tmp.append(pd.DataFrame([[row.Time, row.Calories, row.HR, row.Temperature, row.Steps]], columns
+        if row.HR != 0 and row.Temperature != 0:
+            df30tmp = df30tmp.append(pd.DataFrame([[row.Time, row.Calories, row.HR, row.Temperature, row.Steps]], columns
 =df30tmp.columns))
 
 
@@ -91,12 +93,13 @@ def PreprocessData():
             start60 = currentTime
             df60tmp = pd.DataFrame(columns=["Time", "Calories", "HR", "Temperature", "Steps"])
 
-        df60tmp = df60tmp.append(pd.DataFrame([[row.Time, row.Calories, row.HR, row.Temperature, row.Steps]], columns
+        if row.HR != 0 and row.Temperature != 0:
+            df60tmp = df60tmp.append(pd.DataFrame([[row.Time, row.Calories, row.HR, row.Temperature, row.Steps]], columns
 =df60tmp.columns))
 
-    df15.to_csv('../../Data/15min_v2.csv')
-    df30.to_csv('../../Data/30min_v2.csv')
-    df60.to_csv('../../Data/60min_v2.csv')
+    df15.to_csv('../../Data/15min_v3.csv')
+    df30.to_csv('../../Data/30min_v3.csv')
+    df60.to_csv('../../Data/60min_v3.csv')
 
 
 PreprocessData()

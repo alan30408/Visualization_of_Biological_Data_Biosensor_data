@@ -9,7 +9,6 @@ function LoadBaseData(variables, timeIntervalStart, timeIntervalEnd)
     url = baseUrl + variablesUrl + "&" + timeIntervalStartUrl + "&" + timeIntervalEndUrl;
 
     data = HttpGet(url);
-    console.log(data);
     return JSON.parse(data);
 }
 
@@ -23,6 +22,5 @@ function LoadCorrData(variables, timeIntervalStart, timeIntervalEnd) {
     url = baseUrl + variablesUrl + "&" + timeIntervalStartUrl + "&" + timeIntervalEndUrl;
 
     data = HttpGet(url);
-    console.log(data);
     return data;
 }

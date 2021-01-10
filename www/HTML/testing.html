@@ -6,7 +6,7 @@
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function(event) {
         data = LoadBaseData("HR", "2015-05-20", "2015-05-21");
-        document.getElementById("data").textContent = data;
+        document.getElementById("data").textContent = JSON.stringify(data, null, 2);
     });
 
     /*function to get the selection of the user*/
@@ -52,7 +52,7 @@
         console.log(dateEnd.value);
 
         data = LoadBaseData(variables, dateStart.value, dateEnd.value);
-        document.getElementById("data").textContent = data;
+        document.getElementById("data").textContent = JSON.stringify(data, null, 2);
     }
 
     /*load data and preprocess it for correlation*/
