@@ -11,6 +11,9 @@ from random import randrange
 from Business.LoadingGeneralData import LoadingGeneralData
 loadingGeneralData = LoadingGeneralData()
 
+from Business.LoadingCorrelatedData import LoadingCorrelatedData
+loadingCorrelatedData = LoadingCorrelatedData()
+
 import pandas as pd
 import json
 import csv
@@ -58,6 +61,25 @@ def LoadGeneralData():
     data = loadingGeneralData.LoadGeneralData(variables, (timeIntervalStart, timeIntervalEnd))
     return json.dumps({"data": json.loads(data.to_json(orient = "records"))})
 
+@app.route('/LoadCorrelatedData') 
+def LoadCorrelatedData():
+    """
+    http://127.0.0.1:5000/LoadCorrelatedData?vairable=Time&timeIntervalStart=2015-05-20%2019:00:00&timeIntervalEnd=2015-05-21%2019:00:00
+
+    time format: "YYYY-MM-DD HH:MM:SS"
+    """
+    variables = request.args.get('variables')
+    timeIntervalStart = request.args.get('timeIntervalStart')
+    timeIntervalEnd = request.args.get('timeIntervalEnd')
+
+    variables = variables.split(",")
+    
+    if "Time" not in variables:
+        variables.insert(0, "Time")
+        
+    data = loadingCorrelatedData.LoadCorrelatedData(variables, (timeIntervalStart, timeIntervalEnd))
+    return data
+
 # Momentarily with test data as I can't load data with LoadGeneralData
 inputPath = r'Data/ChartsTest.csv'
 testData = []
@@ -75,6 +97,10 @@ def barChart():
 @app.route('/lineChart')
 def lineChart():
     return render_template('/lines.html', data = json.dumps(testData))
+
+@app.route('/correlation')
+def correlation():
+    return render_template('/correlation.html')
 
 
 if __name__ == '__main__':
