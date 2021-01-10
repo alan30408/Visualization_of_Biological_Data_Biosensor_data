@@ -68,13 +68,14 @@
         var_num = variables.filter(Boolean)
 
         if (var_num.length > 2) {
-            document.getElementById("data").textContent = "Please choose just two variables."
+            document.getElementById("data").textContent = "Please choose just two variables.";
+            document.getElementById("data2").textContent = "";
         } else if (var_num.length < 1){
-            document.getElementById("data").textContent = "Please choose two variables."
+            document.getElementById("data").textContent = "Please choose two variables.";
+            document.getElementById("data2").textContent = "";
         }else {
             data = LoadBaseData(variables, dateStart.value, dateEnd.value);
-            data = JSON.parse(data);
-            data = JSON.parse(data["data"]);
+            data = data["data"];
             x_values = [];
             y_values = [];
             for (i=0; i<data.length; i++) {
