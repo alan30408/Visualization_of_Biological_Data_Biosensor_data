@@ -128,7 +128,7 @@ function DrawGraph(dataset, coly, type)
           d3.select(event.currentTarget)
           tooltip
                .style("visibility","visible")
-               .style("width", "50px")
+               .style("width", chartWidth+margin.left+margin.right)
                .text(d[coly])
      }
 
@@ -167,8 +167,7 @@ function DrawGraph(dataset, coly, type)
 
 
           // Add line at average with legend
-          let plotAvg = chartHeight*(ymax-avg)/(ymax-(ymin));
-          
+          let plotAvg = scaleY(avg)
           svg.select("#AverageLineChart")
                .attr("y1", plotAvg)
                .attr("y2", plotAvg);
