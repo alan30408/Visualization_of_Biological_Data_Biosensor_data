@@ -197,8 +197,3 @@ function DrawGraph(dataset, coly, type)
      }
       
 }
-
-function ClearGraph()
-{
-     document.getElementsByTagName("bar")
-}

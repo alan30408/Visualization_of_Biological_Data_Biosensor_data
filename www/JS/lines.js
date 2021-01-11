@@ -1,19 +1,20 @@
 /* Project Biosensors */
 // Help for line plot part: https://www.d3-graph-gallery.com/graph/line_change_data.html
 
-//Print dataset to console
-dataset.splice(0,1); // leave out if dataset has no header
+//Load dataset
+
+dataset = LoadBaseData("HR", "2015-05-20", "2015-05-21");
 console.log(dataset);
+console.log(dataset["data"]);
+dataset = dataset["data"]
 
 // Specify columns that should be used as data for x and y
-colx = "Column1";
-coly = "Column2";
+colx = "Time";
+coly = "HR";
 
 // Dimensions of chart and margin
-var barHeight = 10;
-
 let chartWidth = 500;
-var chartHeight = dataset.length * barHeight;
+var chartHeight = 300;
 const margin = {top: 30, right: 30, bottom: 80, left: 50};
 
 
@@ -65,7 +66,7 @@ svg.append("text")
      .attr("text-anchor", "end")
      .attr("x", chartWidth)
      .attr("y", chartHeight+margin.top+40) 
-     .text("Label x [Unit]");
+     .text(colx);
 
 
 // Add y axis with label        
@@ -76,7 +77,7 @@ svg.append("text")
      .attr("text-anchor", "start")
      .attr("x",-40)
      .attr("y", -10)
-     .text("Label y [Unit]");
+     .text(coly);
      
 
 // Add line
