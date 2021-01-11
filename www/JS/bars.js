@@ -7,11 +7,9 @@ console.log(dataset);
 console.log(dataset["data"]);
 dataset = dataset["data"]
 
-
 // Specify columns that should be used as data for x and y
 colx = "Time";
 coly = "HR";
-
 
 // Dimensions of chart and margin
 let chartWidth = 500;
@@ -133,7 +131,8 @@ svg.selectAll("bars")
 
 
 // Add line at average with legend
-let plotAvg = chartHeight*(ymax-avg)/(ymax-(ymin));
+let plotAvg = chartHeight*(avg-ymin)/(ymax-ymin)-margin.top
+console.log(plotAvg)
 let avgLine = svg.append("line")
      .attr("class", "avgLine")
      .attr("x1",0)
