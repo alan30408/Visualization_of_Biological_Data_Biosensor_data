@@ -8,7 +8,7 @@ var chartHeight = 300;
 const margin = {top: 30, right: 30, bottom: 80, left: 50};
 
 document.addEventListener("DOMContentLoaded", function(event) {
-// Specify columns that should be used as data for x and y
+     // Specify columns that should be used as data for x and y
      colx = "Time";
 
      // Create SVG and place it correctly
