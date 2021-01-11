@@ -1,9 +1,7 @@
 /* Project Biosensors */
 
-//Print dataset to console
-dataset.splice(0,1); // leave out if dataset has no header
-console.log(dataset);
 
+//Load dataset
 dataset = LoadBaseData("HR", "2015-05-20", "2015-05-21");
 console.log(dataset);
 console.log(dataset["data"]);
@@ -16,10 +14,8 @@ coly = "HR";
 
 
 // Dimensions of chart and margin
-var barHeight = 10;
-
 let chartWidth = 500;
-var chartHeight = dataset.length * barHeight;
+var chartHeight = 300;
 const margin = {top: 30, right: 30, bottom: 80, left: 50};
 
 // Create SVG and place it correctly
@@ -73,7 +69,7 @@ svg.append("text")
      .attr("text-anchor", "end")
      .attr("x", chartWidth)
      .attr("y", chartHeight+margin.top+40) 
-     .text("Label x [Unit]");
+     .text(colx);
 
 
 // Add y axis with label        
@@ -84,7 +80,7 @@ svg.append("text")
      .attr("text-anchor", "start")
      .attr("x",-40)
      .attr("y", -10)
-     .text("Label y [Unit]");
+     .text(coly);
 
 
 // Define diverging colorscale    
@@ -103,7 +99,7 @@ function mouseOver (event,d){
 	tooltip
           .style("visibility","visible")
           .style("width", "50px")
-		.text(d[coly])
+		.text(Math.round(d[coly]))
 }
 
 function mouseOut (event,d){
