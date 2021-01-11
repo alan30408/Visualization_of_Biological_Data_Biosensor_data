@@ -1,12 +1,9 @@
 <!--  Project Biosensors -->
 
-{% extends "base.html" %}
+{% extends "template.html" %}
 {% block content %}
 
 <script type="text/javascript" src="{{ url_for('static', filename='JS/LoadingData.js') }}"></script>
-<script type="text/javascript" >
-    dataset = {{ data | safe }};
-</script>
 <script src="{{ url_for('static', filename='JS/bars.js') }}"></script>
 
 <script>
@@ -14,8 +11,15 @@
     {
         data = GetVariableAndDates();
         dataset = LoadBaseData(data[0], data[1], data[2]);
+        
+        var type = "";
 
-        DrawGraph(dataset, data[0]);
+        if(data[0] == "HR" || data[0] == "Temperature")
+            type = "bar";
+        else
+            type = "line";
+
+        DrawGraph(dataset, data[0], type);
     }
 </script>
 
@@ -38,5 +42,8 @@
 
     <button onclick=Update()>Select</button>
 </div>
+
+<!-- div for plot -->
+<div id="plot"></div>
 
 {% endblock %}

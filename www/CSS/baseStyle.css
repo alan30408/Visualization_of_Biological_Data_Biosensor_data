@@ -46,3 +46,7 @@ body{
     stroke: darkblue;
 }
   
+.line{
+  stroke-width: 2px;
+  stroke: red;
+}
