@@ -38,9 +38,17 @@ def index():
 def base():
     return render_template('base.html')
     
+@app.route('/home')
+def home():
+    return render_template('home.html')
+
 @app.route('/testing')
 def testing():
     return render_template('testing.html')
+
+@app.route('/generalData')
+def generalData():
+    return render_template('generalData.html')
 
 @app.route('/LoadGeneralData') 
 def LoadGeneralData():
