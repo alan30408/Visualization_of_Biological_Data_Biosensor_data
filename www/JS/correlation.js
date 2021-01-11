@@ -6,8 +6,6 @@ for ( var i = 0; i < dataset_variable2.length; i++) {
 	data[i]["HR"] = dataset_variable2[i].HR
 }
 
-console.log(data)
-
 // set svg dimensions and margins
 const svgWidth = 500 ;
 const svgHeight = 360;
