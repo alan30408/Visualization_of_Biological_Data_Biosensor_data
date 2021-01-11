@@ -4,10 +4,6 @@
 {% block content %}
 
 <script type="text/javascript" src="{{ url_for('static', filename='JS/LoadingData.js') }}"></script>
-<script type="text/javascript" >
-    dataset = {{ data | safe }};
-</script>
-
 <script src="{{ url_for('static', filename='JS/correlation.js') }}"></script>
 
 <script type="text/javascript">
@@ -53,9 +49,6 @@
         variables = values[0];
         dateStart = values[1];
         dateEnd = values[2];
-        console.log(variables);
-        console.log(dateStart.value);
-        console.log(dateEnd.value);
 
         var_num = variables.filter(Boolean)
 
@@ -66,6 +59,7 @@
         }else {
             data = LoadCorrData(variables, dateStart.value, dateEnd.value);
             document.getElementById("data").textContent = data;
+            correlation_plot(variables, dateStart.value, dateEnd.value);
         }
     }
 </script>
