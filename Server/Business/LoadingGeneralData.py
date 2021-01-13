@@ -6,7 +6,7 @@ class LoadingGeneralData:
     def __init__(self):
         pass
 
-    def LoadGeneralData(self, variable, timeInterval):
+    def LoadGeneralData(self, variable, timeInterval=None):
         """
         Load general data
 
@@ -17,7 +17,10 @@ class LoadingGeneralData:
         fileName = "60min_v3.csv"
         df = pd.read_csv('Data/' + fileName)
 
-        df['DateTime'] = pd.to_datetime(df['Time'])
-        mask = (df['DateTime'] > timeInterval[0]) & (df['DateTime'] <= timeInterval[1])
+        if timeInterval == None:
+            return df[variable]
+        else:
+            df['DateTime'] = pd.to_datetime(df['Time'])
+            mask = (df['DateTime'] > timeInterval[0]) & (df['DateTime'] <= timeInterval[1])
 
-        return df[variable].loc[mask]
+            return df[variable].loc[mask]

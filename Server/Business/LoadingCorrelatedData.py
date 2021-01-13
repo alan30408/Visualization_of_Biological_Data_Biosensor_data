@@ -7,9 +7,9 @@ class LoadingCorrelatedData:
     def __init__(self):
         pass
 
-    def LoadCorrelatedData(self, variables, timeInterval):
+    def LoadCorrelatedData(self, variables):
 
-        data = LoadingGeneralData().LoadGeneralData(variables, timeInterval)
+        data = LoadingGeneralData().LoadGeneralData(variables)
         x_values = []
         y_values = []
         data = json.loads(data.to_json(orient = "records"))

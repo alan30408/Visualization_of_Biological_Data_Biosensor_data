@@ -58,34 +58,33 @@ def LoadGeneralData():
     time format: "YYYY-MM-DD HH:MM:SS"
     """
     variables = request.args.get('variables')
-    timeIntervalStart = request.args.get('timeIntervalStart')
-    timeIntervalEnd = request.args.get('timeIntervalEnd')
-
     variables = variables.split(",")
     
     if "Time" not in variables:
         variables.insert(0, "Time")
-        
-    data = loadingGeneralData.LoadGeneralData(variables, (timeIntervalStart, timeIntervalEnd))
+    #an interval is given
+    if request.args.get('timeIntervalStart'):
+        timeIntervalStart = request.args.get('timeIntervalStart')
+        timeIntervalEnd = request.args.get('timeIntervalEnd')
+        data = loadingGeneralData.LoadGeneralData(variables, (timeIntervalStart, timeIntervalEnd))
+    #loading all data
+    else:
+        data = loadingGeneralData.LoadGeneralData(variables)
     return json.dumps({"data": json.loads(data.to_json(orient = "records"))})
 
 @app.route('/LoadCorrelatedData') 
 def LoadCorrelatedData():
     """
-    http://127.0.0.1:5000/LoadCorrelatedData?vairable=Time&timeIntervalStart=2015-05-20%2019:00:00&timeIntervalEnd=2015-05-21%2019:00:00
-
-    time format: "YYYY-MM-DD HH:MM:SS"
+    http://127.0.0.1:5000/LoadCorrelatedData?variable=Time
     """
     variables = request.args.get('variables')
-    timeIntervalStart = request.args.get('timeIntervalStart')
-    timeIntervalEnd = request.args.get('timeIntervalEnd')
 
     variables = variables.split(",")
     
     if "Time" not in variables:
         variables.insert(0, "Time")
         
-    data = loadingCorrelatedData.LoadCorrelatedData(variables, (timeIntervalStart, timeIntervalEnd))
+    data = loadingCorrelatedData.LoadCorrelatedData(variables)
     return data
 
 # Momentarily with test data as I can't load data with LoadGeneralData

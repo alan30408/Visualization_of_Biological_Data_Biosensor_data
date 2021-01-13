@@ -1,9 +1,9 @@
-function correlation_plot(variables, dateStart_value, dateEnd_value) {	
+function correlation_plot(variables) {	
 
-	raw_data = LoadCorrData(variables, dateStart_value, dateEnd_value)
+	raw_data = LoadCorrData(variables)
 	raw_data = JSON.parse(raw_data);
 	var r_value = raw_data.r_value
-	Time = LoadBaseData(variables[0], dateStart_value, dateEnd_value)["data"];
+	Time = LoadBaseData(variables[0])["data"];
 
 	data = Time
 	for ( var i = 0; i < Time.length; i++) {

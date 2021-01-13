@@ -7,11 +7,6 @@
 <script src="{{ url_for('static', filename='JS/correlation.js') }}"></script>
 
 <script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", function(event) {
-        data = LoadBaseData("HR", "2015-05-20", "2015-05-21");
-        document.getElementById("data").textContent = data;
-    });
-
     /*function to get the selection of the user*/
     function CountCheckboxes() {
         variables = [];
@@ -20,10 +15,6 @@
         checkboxHR = document.getElementById('checkboxHR');
         checkboxTemperature = document.getElementById('checkboxTemperature');
         checkboxSteps = document.getElementById('checkboxSteps');
-
-        dateStart = document.getElementById('dateStart');
-        dateEnd = document.getElementById('dateEnd');
-
 
         if (checkboxCalories.checked) {
             variables.push(checkboxCalories.value);
@@ -40,26 +31,23 @@
         if (checkboxSteps.checked) {
             variables.push(checkboxSteps.value);
         }
-        return [variables, dateStart, dateEnd];
+        return variables;
     }
 
     /*load data and preprocess it for correlation*/
     function Correlate() {
-        values = CountCheckboxes();
-        variables = values[0];
-        dateStart = values[1];
-        dateEnd = values[2];
+        variables = CountCheckboxes();
 
-        var_num = variables.filter(Boolean)
+        var_num = variables.filter(Boolean);
 
         if (var_num.length > 2) {
             document.getElementById("data").textContent = "Please choose just two variables.";
         } else if (var_num.length <= 1){
             document.getElementById("data").textContent = "Please choose two variables.";
         }else {
-            data = LoadCorrData(variables, dateStart.value, dateEnd.value);
-            document.getElementById("data").textContent = data;
-            correlation_plot(variables, dateStart.value, dateEnd.value);
+            data = LoadCorrData(variables);
+            //document.getElementById("data").textContent = data; //to check the data
+            correlation_plot(variables);
         }
     }
 </script>
@@ -76,9 +64,6 @@
 
 <input type="checkbox" id="checkboxSteps" name="Steps" value="Steps">
 <label for="checkboxSteps"> Steps</label><br>
-
-<input type="date" id="dateStart" value="2015-05-20"/>
-<input type="date" id="dateEnd" value="2015-05-21"/>
 
 <button onclick=Correlate()>Correlate</button>
 
