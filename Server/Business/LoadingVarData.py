@@ -34,9 +34,12 @@ class LoadingVarData:
         xyData = []
 
         for i in data:
-            xyData.append((i[variables[1]], i[variables[2]]))
-            x_values.append(i[variables[1]])
-            y_values.append(i[variables[2]])
+            if i[variables[1]] == None or i[variables[2]] == None:
+                continue
+            else:
+                xyData.append((i[variables[1]], i[variables[2]]))
+                x_values.append(i[variables[1]])
+                y_values.append(i[variables[2]])
         
         x = pd.Series(x_values)
         y = pd.Series(y_values)
