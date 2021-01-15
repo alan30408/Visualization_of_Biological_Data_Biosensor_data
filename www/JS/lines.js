@@ -3,7 +3,7 @@
 
 //Load dataset
 
-dataset = LoadBaseData("HR", "2015-05-20", "2015-05-21");
+dataset = LoadData("HR", "2015-05-20", "2015-05-21");
 console.log(dataset);
 console.log(dataset["data"]);
 dataset = dataset["data"]

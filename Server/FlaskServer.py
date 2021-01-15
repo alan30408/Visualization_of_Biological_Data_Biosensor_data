@@ -14,6 +14,9 @@ loadingGeneralData = LoadingGeneralData()
 from Business.LoadingCorrelatedData import LoadingCorrelatedData
 loadingCorrelatedData = LoadingCorrelatedData()
 
+from Business.LoadingVarData import LoadingVarData
+loadingVarData = LoadingVarData()
+
 import pandas as pd
 import json
 import csv
@@ -50,10 +53,10 @@ def testing():
 def generalData():
     return render_template('generalData.html')
 
-@app.route('/LoadGeneralData') 
-def LoadGeneralData():
+@app.route('/LoadVarData') 
+def LoadVarData():
     """
-    http://127.0.0.1:5000/LoadGeneralData?vairable=Time&timeIntervalStart=2015-05-20%2019:00:00&timeIntervalEnd=2015-05-21%2019:00:00
+    http://127.0.0.1:5000/LoadVarData?variable=Time&timeIntervalStart=2015-05-20%2019:00:00&timeIntervalEnd=2015-05-21%2019:00:00&method=correlation
 
     time format: "YYYY-MM-DD HH:MM:SS"
     """
@@ -66,26 +69,16 @@ def LoadGeneralData():
     if request.args.get('timeIntervalStart'):
         timeIntervalStart = request.args.get('timeIntervalStart')
         timeIntervalEnd = request.args.get('timeIntervalEnd')
-        data = loadingGeneralData.LoadGeneralData(variables, (timeIntervalStart, timeIntervalEnd))
+        data = loadingVarData.LoadGeneralData(variables, (timeIntervalStart, timeIntervalEnd))
+        return json.dumps({"data": json.loads(data.to_json(orient = "records"))})
+    #load data for correlation
+    elif request.args.get('method') == "correlation":
+        data = loadingVarData.LoadCorrelatedData(variables)
+        return data
     #loading all data
     else:
-        data = loadingGeneralData.LoadGeneralData(variables)
-    return json.dumps({"data": json.loads(data.to_json(orient = "records"))})
-
-@app.route('/LoadCorrelatedData') 
-def LoadCorrelatedData():
-    """
-    http://127.0.0.1:5000/LoadCorrelatedData?variable=Time
-    """
-    variables = request.args.get('variables')
-
-    variables = variables.split(",")
-    
-    if "Time" not in variables:
-        variables.insert(0, "Time")
-        
-    data = loadingCorrelatedData.LoadCorrelatedData(variables)
-    return data
+        data = loadingVarData.LoadGeneralData(variables)
+        return json.dumps({"data": json.loads(data.to_json(orient = "records"))})
 
 # Momentarily with test data as I can't load data with LoadGeneralData
 inputPath = r'Data/ChartsTest.csv'
