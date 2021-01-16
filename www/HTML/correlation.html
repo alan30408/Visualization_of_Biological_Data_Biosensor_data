@@ -45,7 +45,6 @@
         } else if (var_num.length <= 1){
             document.getElementById("data").textContent = "Please choose two variables.";
         }else {
-            // console.log(variables);
             data = LoadData(variables);
             //document.getElementById("data").textContent = data; //to check the data
             correlation_plot(variables);
