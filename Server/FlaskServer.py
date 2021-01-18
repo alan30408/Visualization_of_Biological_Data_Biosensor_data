@@ -80,27 +80,21 @@ def LoadVarData():
         data = loadingVarData.LoadGeneralData(variables)
         return json.dumps({"data": json.loads(data.to_json(orient = "records"))})
 
-# Momentarily with test data as I can't load data with LoadGeneralData
-inputPath = r'Data/ChartsTest.csv'
-testData = []
-fields = ["Column1","Column2","Column3","Column4","Column5"]
-
-with open(inputPath, encoding='utf-8') as csvf:
-    csvReader = csv.DictReader(csvf,fieldnames=fields)
-    for i,rows in enumerate(csvReader):
-        testData.append(rows)
-
 @app.route('/barChart')
 def barChart():
-    return render_template('/bars.html', data = json.dumps(testData) )
+    return render_template('/bars.html' )
 
 @app.route('/lineChart')
 def lineChart():
-    return render_template('/lines.html', data = json.dumps(testData))
+    return render_template('/lines.html')#, data = json.dumps(testData))
 
 @app.route('/correlation')
 def correlation():
     return render_template('/correlation.html')
+
+@app.route('/pattern')
+def pattern():
+    return render_template('/pattern.html')
 
 
 if __name__ == '__main__':
