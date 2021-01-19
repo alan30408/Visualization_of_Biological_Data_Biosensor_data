@@ -3,7 +3,7 @@
 var svg;
 
 // Dimensions of chart and margin
-var chartWidth = 1080;
+var chartWidth = 1220;
 var chartHeight = 300;
 const margin = {top: 30, right: 30, bottom: 80, left: 50};
 

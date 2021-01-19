@@ -1,19 +1,19 @@
 {% extends "template.html" %}
 {% block content %}
 
-<h3>Visualization of biosensor data</h3>
-
-<div>
-    <span>Steps made: [steps]</span> <br/>
-    <span>Average hearth rate: [HR]</span> <br/>
-    <span>Calories burned: [calories]</span> <br/>
-</div>
-
-<br/>
-
-<div>
-    <a href="{{ url_for('generalData') }}">General information</a> <br/>
-    <a href="{{ url_for('correlation') }}">Correlated data</a>
+<header >
+    <div class="w3-container">
+        <h1><b>Home</b></h1>
+    </div>
+</header>
+  
+<!-- Content-->
+<div class="w3-row-padding">
+    <div>
+        <span>Steps made: [steps]</span> <br/>
+        <span>Average hearth rate: [HR]</span> <br/>
+        <span>Calories burned: [calories]</span> <br/>
+    </div>
 </div>
 
 {% endblock %}

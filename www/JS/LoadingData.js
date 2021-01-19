@@ -13,7 +13,6 @@ function LoadBaseData(variables, timeIntervalStart=null, timeIntervalEnd=null)
     }
 
     var data = HttpGet(url);
-    console.log(data);
     return JSON.parse(data);
 }
 
@@ -25,5 +24,5 @@ function LoadCorrData(variables) {
     var url = baseUrl + variablesUrl;
 
     var data = HttpGet(url);
-    return data;
+    return JSON.parse(data);;
 }

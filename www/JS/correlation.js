@@ -1,14 +1,6 @@
 function correlation_plot(variables) {	
-
-	raw_data = LoadCorrData(variables)
-	raw_data = JSON.parse(raw_data);
-	var r_value = raw_data.r_value
-	Time = LoadBaseData(variables[0])["data"];
-
-	data = Time
-	for ( var i = 0; i < Time.length; i++) {
-		data[i][variables[1]] = raw_data.y_values[i]
-	}
+	var data = LoadCorrData(variables);
+	var r_value = data.r_value;
 
 	// set svg dimensions and margins
 	const svgWidth = 500 ;
@@ -29,7 +21,7 @@ function correlation_plot(variables) {
 
 	// X axis: scale and draw:
 	var x = d3.scaleLinear()
-		.domain([0, 1.1*d3.max(data, function(d) { return + d[variables[0]] })])     // d3.max(data, function(d) { return +d.price })
+		.domain([0, 1.1*data.max_x])     // d3.max(data, function(d) { return +d.price })
 		.range([0, svgWidth]);
 		
 	svg.append("g")
@@ -39,12 +31,13 @@ function correlation_plot(variables) {
 	// Y axis: scale and draw:
 	var y = d3.scaleLinear()
 		.range([svgHeight, 0]);
-		y.domain([0, 1.1*d3.max(data, function(d) { return + d[variables[1]] })]);   // d3.max(bins, function(d) { return d.length; })
+		y.domain([0, 1.1*data.max_y]);   // d3.max(bins, function(d) { return d.length; })
 		
 	svg.append("g")
 		.call(d3.axisLeft(y));
 
 	// set tooltip for mouse movement
+	/*
 	let tooltip = d3.select("#tooltip")
 		.attr("class", "tooltip")
 		.style("opacity", 0);
@@ -54,7 +47,9 @@ function correlation_plot(variables) {
 			.duration(200)
 			.style("opacity", .9);
 			tooltip.html("Data: " + d.Time + `<br>${variables[0]}: ` + d[variables[0]] + `<br>${variables[1]}: ` + d[variables[1]]);
+	
 	}
+	*/
 
 	function mouseOut (event,d){
 		tooltip.transition()
@@ -65,14 +60,15 @@ function correlation_plot(variables) {
 	// append the bar rectangles to the svg element
 	svg.append('g')
 		.selectAll("dot")
-		.data(data)
+		.data(data.data)
 		.enter()
 		.append("circle")
-			.attr("cx", function (d) { return x(d[variables[0]]); } )
-			.attr("cy", function (d) { return y(d[variables[1]]); } )
+			.attr("cx", function (d) { return x(d[0]); } )
+			.attr("cy", function (d) { return y(d[1]); } )
 			.style("fill",  "#b36969" )
 			.attr("r", 3)
-			.attr("stroke", "black")
+			.attr("stroke", "black");
+			/*
 		.on("mouseover",mouseOver)
-		.on("mouseout",mouseOut);
+		.on("mouseout",mouseOut);*/
 }

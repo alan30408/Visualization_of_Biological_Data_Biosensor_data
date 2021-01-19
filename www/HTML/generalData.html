@@ -23,25 +23,32 @@
     }
 </script>
 
-<div>
-    <input type="radio" id="radioCalories" name="variable" value="Calories">
-    <label for="radioCalories"> Calories</label><br>
+<header >
+    <div class="w3-container">
+        <h1><b>General information</b></h1>
+        <div class="w3-section w3-bottombar w3-padding-16">
+            <span class="w3-margin-right">Filter:</span> 
+            
+            <input type="radio" id="radioCalories" name="variable" value="Calories">
+            <label for="radioCalories"> Calories</label><br>
 
-    <input type="radio" id="radioHR" name="variable" value="HR">
-    <label for="radioHR"> HR</label><br>
+            <input type="radio" id="radioHR" name="variable" value="HR">
+            <label for="radioHR"> HR</label><br>
 
-    <input type="radio" id="radioTemperature" name="variable" value="Temperature">
-    <label for="radioTemperature"> Temperature</label><br>
+            <input type="radio" id="radioTemperature" name="variable" value="Temperature">
+            <label for="radioTemperature"> Temperature</label><br>
 
-    <input type="radio" id="radioSteps" name="variable" value="Steps">
-    <label for="radioSteps"> Steps</label><br>
+            <input type="radio" id="radioSteps" name="variable" value="Steps">
+            <label for="radioSteps"> Steps</label><br>
 
 
-    <input type="date" id="dateStart" value="2015-05-20"/>
-    <input type="date" id="dateEnd" value="2015-05-21"/>
+            <input type="date" id="dateStart" value="2015-05-20"/>
+            <input type="date" id="dateEnd" value="2015-05-21"/>
 
-    <button onclick=Update()>Select</button>
-</div>
+            <button onclick=Update()>Select</button>
+        </div>
+    </div>
+</header>
 
 <!-- div for plot -->
 <div id="plot"></div>
