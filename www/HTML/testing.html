@@ -5,7 +5,7 @@
 
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function(event) {
-        data = LoadBaseData("HR", "2015-05-20", "2015-05-21");
+        data = LoadData("HR", "2015-05-20", "2015-05-21");
         document.getElementById("data").textContent = JSON.stringify(data, null, 2);
     });
 
@@ -51,41 +51,10 @@
         console.log(dateStart.value);
         console.log(dateEnd.value);
 
-        data = LoadBaseData(variables, dateStart.value, dateEnd.value);
+        data = LoadData(variables, dateStart.value, dateEnd.value);
         document.getElementById("data").textContent = JSON.stringify(data, null, 2);
     }
 
-    /*load data and preprocess it for correlation*/
-    function Correlate() {
-        values = CountCheckboxes();
-        variables = values[0];
-        dateStart = values[1];
-        dateEnd = values[2];
-        console.log(variables);
-        console.log(dateStart.value);
-        console.log(dateEnd.value);
-
-        var_num = variables.filter(Boolean)
-
-        if (var_num.length > 2) {
-            document.getElementById("data").textContent = "Please choose just two variables.";
-            document.getElementById("data2").textContent = "";
-        } else if (var_num.length < 1){
-            document.getElementById("data").textContent = "Please choose two variables.";
-            document.getElementById("data2").textContent = "";
-        }else {
-            data = LoadBaseData(variables, dateStart.value, dateEnd.value);
-            data = data["data"];
-            x_values = [];
-            y_values = [];
-            for (i=0; i<data.length; i++) {
-                x_values.push(data[i][variables[0]]);
-                y_values.push(data[i][variables[1]]);
-            }
-            document.getElementById("data").textContent = x_values;
-            document.getElementById("data2").textContent = y_values;
-        }
-    }
 </script>
 
 
@@ -105,7 +74,6 @@
 <input type="date" id="dateEnd" value="2015-05-21"/>
 
 <button onclick=UpdateData()>Update</button>
-<button onclick=Correlate()>Correlate</button>
 
 <br/>
 <br/>

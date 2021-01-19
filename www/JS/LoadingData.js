@@ -1,28 +1,22 @@
-function LoadBaseData(variables, timeIntervalStart=null, timeIntervalEnd=null)
-{
-    var baseUrl = "http://127.0.0.1:5000/LoadGeneralData?";
+function LoadData(variables,timeIntervalStart=null, timeIntervalEnd=null, method=null) {
+    var baseUrl = "http://127.0.0.1:5000/LoadVarData?";
 
     var variablesUrl = "variables="+variables;
+    var url = baseUrl + variablesUrl;
+    if (method != null) {
+        url += "&method="+method;
+    }
     if (timeIntervalStart===null){
-        var url = baseUrl + variablesUrl;
+        var data = HttpGet(url);
+        //console.log(data);
+        return JSON.parse(data);
     } else {
         var timeIntervalStartUrl = "timeIntervalStart="+timeIntervalStart;
         var timeIntervalEndUrl = "timeIntervalEnd="+timeIntervalEnd;
 
-        var url = baseUrl + variablesUrl + "&" + timeIntervalStartUrl + "&" + timeIntervalEndUrl;
+        url += "&" + timeIntervalStartUrl + "&" + timeIntervalEndUrl;
+        var data = HttpGet(url);
+        //console.log(data);
+        return JSON.parse(data);
     }
-
-    var data = HttpGet(url);
-    return JSON.parse(data);
-}
-
-function LoadCorrData(variables) {
-    var baseUrl = "http://127.0.0.1:5000/LoadCorrelatedData?";
-
-    var variablesUrl = "variables="+variables;
-
-    var url = baseUrl + variablesUrl;
-
-    var data = HttpGet(url);
-    return JSON.parse(data);;
 }
