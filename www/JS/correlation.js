@@ -70,7 +70,7 @@ var	svg1 = d3.select("#plot")
 
 function correlation_plot(variables) {	
 
-	var data = LoadData(variables, null, null, "correlation");
+	var data = LoadData(variables, null, null, method="correlation");
 	var r_value = data.r_value;
 
 	// set label
