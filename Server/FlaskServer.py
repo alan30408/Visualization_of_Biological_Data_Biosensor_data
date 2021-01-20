@@ -8,12 +8,6 @@
 from flask import Flask, render_template, redirect, url_for, request, jsonify
 from random import randrange
 
-from Business.LoadingGeneralData import LoadingGeneralData
-loadingGeneralData = LoadingGeneralData()
-
-from Business.LoadingCorrelatedData import LoadingCorrelatedData
-loadingCorrelatedData = LoadingCorrelatedData()
-
 from Business.LoadingVarData import LoadingVarData
 loadingVarData = LoadingVarData()
 
@@ -70,7 +64,7 @@ def LoadVarData():
         timeIntervalStart = request.args.get('timeIntervalStart')
         timeIntervalEnd = request.args.get('timeIntervalEnd')
         data = loadingVarData.LoadGeneralData(variables, (timeIntervalStart, timeIntervalEnd))
-        return json.dumps({"data": json.loads(data.to_json(orient = "records"))})
+        return json.dumps({"data": json.loads(data[0].to_json(orient = "records")), "min": data[1], "max": data[2], "avg": data[3]})
     #load data for correlation
     elif request.args.get('method') == "correlation":
         data = loadingVarData.LoadCorrelatedData(variables)
@@ -78,7 +72,7 @@ def LoadVarData():
     #loading all data
     else:
         data = loadingVarData.LoadGeneralData(variables)
-        return json.dumps({"data": json.loads(data.to_json(orient = "records"))})
+        return json.dumps({"data": json.loads(data[0].to_json(orient = "records")), "min": data[1], "max": data[2], "avg": data[3]})
 
 @app.route('/barChart')
 def barChart():
