@@ -1,18 +1,31 @@
 {% extends "template.html" %}
 {% block content %}
 
+<script type="text/javascript" src="{{ url_for('static', filename='JS/LoadingData.js') }}"></script>
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function(event) {
+        data = LoadData("Steps,HR,Calories", null, null, method="home");
+        document.getElementById("steps").textContent = "Steps made: " + data["Steps"].toString();
+        document.getElementById("HR").textContent = "Average HR: " + data["HR"].toString();
+        document.getElementById("calories").textContent = "Average Calories: " + data["Calories"].toString();
+    });
+</script>
+
 <header >
     <div class="w3-container">
         <h1><b>Home</b></h1>
+        <h3>Welcome! Explore your tracked data and get to know your lifestyle and your body a bit more.</h3>
+        <h5>Here is an overview over your whole tracked data. Your average HR and average burnt Calories are shown as well as all steps you took over the whole time. You are good on track to a healthy lifestyle.</h5>
     </div>
 </header>
   
 <!-- Content-->
 <div class="w3-row-padding">
     <div>
-        <span>Steps made: [steps]</span> <br/>
-        <span>Average hearth rate: [HR]</span> <br/>
-        <span>Calories burned: [calories]</span> <br/>
+        <span id="steps"></span> <br/>
+        <span id="HR"></span> <br/>
+        <span id="calories"></span> <br/>
     </div>
 </div>
 

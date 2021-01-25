@@ -69,6 +69,9 @@ def LoadVarData():
     elif request.args.get('method') == "correlation":
         data = loadingVarData.LoadCorrelatedData(variables)
         return data
+    elif request.args.get('method') == "home":
+        data = loadingVarData.LoadHomeData(variables)
+        return data
     #loading all data
     else:
         data = loadingVarData.LoadGeneralData(variables)

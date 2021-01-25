@@ -62,3 +62,16 @@ class LoadingVarData:
             "r_value" : r,
          }
         return json.dumps(ret_data)
+
+    def LoadHomeData(self, variables):
+        data = LoadingVarData().LoadGeneralData(variables)
+        #data = json.loads(data.to_json(orient = "records"))
+        home_val = {}
+        print(data)
+        for i in variables[1:]:
+            s = pd.Series(data[i])
+            if i == "Steps":
+                home_val[i] = int(s.sum())
+            else:
+                home_val[i] = "%.2f" % s.mean()
+        return json.dumps(home_val)
