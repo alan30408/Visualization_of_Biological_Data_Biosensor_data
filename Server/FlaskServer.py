@@ -64,15 +64,21 @@ def LoadVarData():
         timeIntervalStart = request.args.get('timeIntervalStart')
         timeIntervalEnd = request.args.get('timeIntervalEnd')
         data = loadingVarData.LoadGeneralData(variables, (timeIntervalStart, timeIntervalEnd))
-        return json.dumps({"data": json.loads(data.to_json(orient = "records"))})
+        return json.dumps({"data": json.loads(data[0].to_json(orient = "records")), "min": data[1], "max": data[2], "avg": data[3]})
     #load data for correlation
     elif request.args.get('method') == "correlation":
         data = loadingVarData.LoadCorrelatedData(variables)
         return data
+    elif request.args.get('method') == "home":
+        data = loadingVarData.LoadHomeData(variables)
+        return data
+    elif request.args.get('method') == "pattern":
+        data = loadingVarData.LoadPatternData(variables)
+        return data
     #loading all data
     else:
         data = loadingVarData.LoadGeneralData(variables)
-        return json.dumps({"data": json.loads(data.to_json(orient = "records"))})
+        return json.dumps({"data": json.loads(data[0].to_json(orient = "records")), "min": data[1], "max": data[2], "avg": data[3]})
 
 @app.route('/barChart')
 def barChart():
@@ -80,7 +86,7 @@ def barChart():
 
 @app.route('/lineChart')
 def lineChart():
-    return render_template('/lines.html')#, data = json.dumps(testData))
+    return render_template('/lines.html')
 
 @app.route('/correlation')
 def correlation():

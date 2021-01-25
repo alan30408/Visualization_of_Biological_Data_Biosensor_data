@@ -17,13 +17,23 @@ class LoadingVarData:
         fileName = "60min_v3.csv"
         df = pd.read_csv('Data/' + fileName)
 
+        min_values = {}
+        max_values = {}
+        average_values = {}
         if timeInterval == None:
             return df[variable]
         else:
             df['DateTime'] = pd.to_datetime(df['Time'])
             mask = (df['DateTime'] > timeInterval[0]) & (df['DateTime'] <= timeInterval[1])
 
-            return df[variable].loc[mask]
+            for i in variable[1:]:
+                s = pd.Series(df[i].loc[mask])
+                min_values[i] = s.min()
+                max_values[i] = s.max()
+                average_values[i] = s.mean()
+            data = [df[variable].loc[mask], min_values, max_values, average_values]
+            print(data)
+            return data
 
     def LoadCorrelatedData(self, variables):
 
@@ -53,15 +63,34 @@ class LoadingVarData:
          }
         return json.dumps(ret_data)
 
+    def LoadHomeData(self, variables):
+        data = LoadingVarData().LoadGeneralData(variables)
+        #data = json.loads(data.to_json(orient = "records"))
+        home_val = {}
+        print(data)
+        for i in variables[1:]:
+            s = pd.Series(data[i])
+            if i == "Steps":
+                home_val[i] = int(s.sum())
+            else:
+                home_val[i] = "%.2f" % s.mean()
+        return json.dumps(home_val)
 
-    def LoadPatternData(self, variable):
+    def LoadPatternData(self, variables):
         """
-        Load general data
+        Load pattern data
 
-        variable: 'Time', 'Calories', 'HR', 'Temperature', 'Steps' (one)
+        variable: 'Time', 'Calories', 'HR', 'Temperature', 'Steps' (one or multiple)
+        timeInterval: (start, end)
         """
 
-        fileName = "60min_v3.csv"
+        fileName = "hour_of_day_grouping.csv"
         df = pd.read_csv('Data/' + fileName)
 
-        return df[variable]
+        if timeInterval == None:
+            return df[variable]
+        else:
+            df['DateTime'] = pd.to_datetime(df['Time'])
+            mask = (df['DateTime'] > timeInterval[0]) & (df['DateTime'] <= timeInterval[1])
+
+            return df[variable].loc[mask]
