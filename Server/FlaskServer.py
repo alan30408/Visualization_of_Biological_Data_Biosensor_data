@@ -8,12 +8,6 @@
 from flask import Flask, render_template, redirect, url_for, request, jsonify
 from random import randrange
 
-from Business.LoadingGeneralData import LoadingGeneralData
-loadingGeneralData = LoadingGeneralData()
-
-from Business.LoadingCorrelatedData import LoadingCorrelatedData
-loadingCorrelatedData = LoadingCorrelatedData()
-
 from Business.LoadingVarData import LoadingVarData
 loadingVarData = LoadingVarData()
 
