@@ -11,6 +11,9 @@ from random import randrange
 from Business.LoadingVarData import LoadingVarData
 loadingVarData = LoadingVarData()
 
+from Business.LoadingPatternData import LoadingPatternData
+loadingPatternData = LoadingPatternData()
+
 import pandas as pd
 import json
 import csv
@@ -73,7 +76,7 @@ def LoadVarData():
         data = loadingVarData.LoadHomeData(variables)
         return data
     elif request.args.get('method') == "pattern":
-        data = loadingVarData.LoadPatternData(variables)
+        data = loadingPatternData.LoadPatternData(variables)
         return data
     #loading all data
     else:

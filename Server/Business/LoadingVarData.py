@@ -35,6 +35,7 @@ class LoadingVarData:
             print(data)
             return data
 
+
     def LoadCorrelatedData(self, variables):
 
         data = LoadingVarData().LoadGeneralData(variables)
@@ -63,6 +64,7 @@ class LoadingVarData:
          }
         return json.dumps(ret_data)
 
+
     def LoadHomeData(self, variables):
         data = LoadingVarData().LoadGeneralData(variables)
         #data = json.loads(data.to_json(orient = "records"))
@@ -75,22 +77,3 @@ class LoadingVarData:
             else:
                 home_val[i] = "%.2f" % s.mean()
         return json.dumps(home_val)
-
-    def LoadPatternData(self, variables):
-        """
-        Load pattern data
-
-        variable: 'Time', 'Calories', 'HR', 'Temperature', 'Steps' (one or multiple)
-        timeInterval: (start, end)
-        """
-
-        fileName = "hour_of_day_grouping.csv"
-        df = pd.read_csv('Data/' + fileName)
-
-        if timeInterval == None:
-            return df[variable]
-        else:
-            df['DateTime'] = pd.to_datetime(df['Time'])
-            mask = (df['DateTime'] > timeInterval[0]) & (df['DateTime'] <= timeInterval[1])
-
-            return df[variable].loc[mask]
