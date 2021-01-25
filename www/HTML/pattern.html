@@ -13,8 +13,7 @@
     function Update()
     {
         data = GetVariableAndDates();
-        dataset = LoadData(data[0], data[1], data[2]);
-
+        dataset = LoadData(data[0], data[1], data[2], method = "pattern");
         DrawGraph(dataset, data[0], "bar");
     }
 </script>

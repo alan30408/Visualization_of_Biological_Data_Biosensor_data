@@ -72,6 +72,9 @@ def LoadVarData():
     elif request.args.get('method') == "home":
         data = loadingVarData.LoadHomeData(variables)
         return data
+    elif request.args.get('method') == "pattern":
+        data = loadingVarData.LoadPatternData(variables)
+        return data
     #loading all data
     else:
         data = loadingVarData.LoadGeneralData(variables)
@@ -83,7 +86,7 @@ def barChart():
 
 @app.route('/lineChart')
 def lineChart():
-    return render_template('/lines.html')#, data = json.dumps(testData))
+    return render_template('/lines.html')
 
 @app.route('/correlation')
 def correlation():
