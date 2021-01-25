@@ -43,3 +43,8 @@ function GetVariableAndDates() {
 
     return [variable, dateStart, dateEnd];
 }
+
+function GetVariable() {
+    var variable = document.querySelector('input[name="variable"]:checked').value;
+    return variable;
+}

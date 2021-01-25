@@ -83,6 +83,15 @@ def LoadVarData():
         data = loadingVarData.LoadGeneralData(variables)
         return json.dumps({"data": json.loads(data[0].to_json(orient = "records")), "min": data[1], "max": data[2], "avg": data[3]})
 
+
+@app.route('/LoadPatternData')
+def LoadPatternData():
+    variable = request.args.get('variable')
+
+    data = loadingPatternData.LoadPatternData(variable)
+    return json.dumps({"data": json.loads(data.to_json(orient = "records"))})
+
+
 @app.route('/barChart')
 def barChart():
     return render_template('/bars.html' )

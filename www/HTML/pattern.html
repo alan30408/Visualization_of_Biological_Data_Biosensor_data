@@ -12,9 +12,12 @@
 <script>
     function Update()
     {
-        data = GetVariableAndDates();
-        dataset = LoadData(data[0], data[1], data[2], method = "pattern");
-        DrawGraph(dataset, data[0], "bar");
+        data = GetVariable();
+        dataset = LoadPatternData(data);
+
+        console.log(dataset);
+
+        DrawGraph(dataset, data, "bar");
     }
 </script>
 
@@ -30,10 +33,6 @@
 
     <input type="radio" id="radioSteps" name="variable" value="Steps">
     <label for="radioSteps"> Steps</label><br>
-
-
-    <input type="date" id="dateStart" value="2015-05-20"/>
-    <input type="date" id="dateEnd" value="2015-05-21"/>
 
     <button onclick=Update()>Select</button>
 </div>

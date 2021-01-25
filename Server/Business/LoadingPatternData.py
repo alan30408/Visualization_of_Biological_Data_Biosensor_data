@@ -16,4 +16,4 @@ class LoadingPatternData:
         fileName = "hour_of_day_grouping.csv"
         df = pd.read_csv('Data/' + fileName)
 
-        return df[variable]
+        return df[["Time", variable]]

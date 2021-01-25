@@ -20,3 +20,14 @@ function LoadData(variables,timeIntervalStart=null, timeIntervalEnd=null, method
         return JSON.parse(data);
     }
 }
+
+function LoadPatternData(variable)
+{
+    var baseUrl = "http://127.0.0.1:5000/LoadPatternData?";
+    var data = "variable=" + variable;
+
+    url = baseUrl + data;
+
+    var data = HttpGet(url);
+    return JSON.parse(data);
+}
