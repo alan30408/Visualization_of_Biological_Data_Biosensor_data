@@ -8,9 +8,12 @@ from datetime import datetime
 
 result = {}
 
-with open('60min_v3.csv', 'r') as csvfile:
+with open('../../Data/60min_v3.csv', 'r') as csvfile:
     csvreader = csv.reader(csvfile)
-    for row in csvreader:
+    for i, row in enumerate(csvreader):
+        if i == 0:
+            continue
+
         if row[2]: # Filter out rows with missing values
             # Extract hour of day (hod) from date
             date_time_obj = datetime.strptime(row[1], '%Y-%m-%d %H:%M:%S')

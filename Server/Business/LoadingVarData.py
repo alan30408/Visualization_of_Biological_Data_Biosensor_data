@@ -52,3 +52,16 @@ class LoadingVarData:
             "r_value" : r,
          }
         return json.dumps(ret_data)
+
+
+    def LoadPatternData(self, variable):
+        """
+        Load general data
+
+        variable: 'Time', 'Calories', 'HR', 'Temperature', 'Steps' (one)
+        """
+
+        fileName = "60min_v3.csv"
+        df = pd.read_csv('Data/' + fileName)
+
+        return df[variable]
