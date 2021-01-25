@@ -129,7 +129,7 @@ function DrawGraph(dataset, coly, type)
           tooltip
                .style("visibility","visible")
                .style("width", chartWidth+margin.left+margin.right)
-               .text(d[coly])
+               .text(Math.round(d[coly]*100)/100)
      }
 
      function mouseOut (event,d){
@@ -142,7 +142,7 @@ function DrawGraph(dataset, coly, type)
           tooltip
                .style("visibility","visible")
                .style("width", chartWidth+margin.left+margin.right)
-               .text("Add description, more info etc.")
+               .text("")
      }
 
 
@@ -173,26 +173,8 @@ function DrawGraph(dataset, coly, type)
                .attr("y2", plotAvg);
 
           svg.select("#AverageLineText")
-               .text("Average: "+ Math.round(avg))
+               .text("Average: "+ Math.round(avg*100)/100)
 
           d3.selectAll(".avgLine").raise();
      }
-
-
-     // Add line
-     d3.selectAll(".line").remove()
-
-     if(type=="line")
-     {
-          svg.selectAll("lines")
-               .data([dataset], function(d){return d[coly]})
-               .enter()
-               .append("path")
-               .attr("class", "line")
-               .attr("d", d3.line()
-                    .x(function(d){return scaleX(d[colx])+scaleX.bandwidth()/2;})
-                    .y(function(d){return scaleY(d[coly]);}))
-                    .attr("fill", "none");
-     }
-      
 }

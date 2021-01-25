@@ -129,7 +129,7 @@ function DrawGraph(dataset, coly, type)
           tooltip
                .style("visibility","visible")
                .style("width", chartWidth+margin.left+margin.right)
-               .text(d[coly])
+               .text(Math.round(d[coly]*100)/100)
      }
 
      function mouseOut (event,d){
@@ -173,7 +173,7 @@ function DrawGraph(dataset, coly, type)
                .attr("y2", plotAvg);
 
           svg.select("#AverageLineText")
-               .text("Average: "+ Math.round(avg))
+               .text("Average: "+ Math.round(avg*100)/100)
 
           d3.selectAll(".avgLine").raise();
      }
