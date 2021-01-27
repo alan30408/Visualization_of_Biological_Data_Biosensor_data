@@ -34,6 +34,17 @@ class LoadingVarData:
 
         df = pd.read_csv('Data/' + fileName)
 
+        if elapsedDays > 31:
+            df['Calories'] = df['Calories'].apply(lambda x: x*60*24*31)
+            df['Steps'] = df['Steps'].apply(lambda x: x*60*24*31)
+        elif elapsedDays > 7:
+            df['Calories'] = df['Calories'].apply(lambda x: x*60*24*7)
+            df['Steps'] = df['Steps'].apply(lambda x: x*60*24*7)
+        else:
+            df['Calories'] = df['Calories'].apply(lambda x: x*60)
+            df['Steps'] = df['Steps'].apply(lambda x: x*60)
+
+
         min_values = {}
         max_values = {}
         average_values = {}

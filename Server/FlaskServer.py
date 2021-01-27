@@ -54,6 +54,10 @@ def generalData():
 def correlatedData():
     return render_template('correlatedData.html')
 
+@app.route('/patternData')
+def patternData():
+    return render_template('patternData.html')
+
 @app.route('/LoadVarData') 
 def LoadVarData():
     """

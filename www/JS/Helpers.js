@@ -50,6 +50,7 @@ function GetVariable() {
 }
 
 function DateToString(date, format){
+    var orgDate = date;
     var date = new Date(date);
 
     var year = date.getFullYear();
@@ -66,6 +67,9 @@ function DateToString(date, format){
     else if(format == "monthDay")
     {
         return day + " " + monthText + " " + year;
+    }
+    else if(format == "none"){
+        return orgDate;
     }
 
 }

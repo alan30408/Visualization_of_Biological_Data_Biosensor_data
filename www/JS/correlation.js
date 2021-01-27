@@ -44,7 +44,7 @@ var svg;
 
 
 document.addEventListener("DOMContentLoaded", function(event) {
-	var	svg = d3.select("#plot")
+	svg = d3.select("#plot")
 			.append("svg")
 			.attr("width", svgWidth + margin.left + margin.right)
 			.attr("height", svgHeight + margin.top + margin.bottom)
@@ -84,6 +84,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 // Heatmap Function
 function correlation_plot(variables) {	
 	
+	console.log(svg);
+
 	var data = LoadData(variables, null, null, "correlation");
 	var r_value = data.r_value;
 
@@ -220,6 +222,8 @@ function correlation_plot(variables) {
 
 	// Remove data one time per click
 	d3.selectAll(".dot").remove()
+
+	console.log(svg);
 
 	// append the dot to the svg element
 	svg.append('g')

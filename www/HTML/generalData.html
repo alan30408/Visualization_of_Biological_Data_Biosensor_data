@@ -11,7 +11,17 @@
     {
         data = GetVariableAndDates();
         dataset = LoadData(data[0], data[1], data[2]);
-        
+
+        var dateFrom = new Date(data[1]);
+        var dateTo = new Date(data[2]);
+
+        var difference = Math.ceil(Math.abs(dateTo - dateFrom) / (1000 * 60 * 60 * 24));
+        var dateFormat = "withHour";
+
+        if(difference > 7){
+            dateFormat = "monthDay";
+        }
+
         var type = "";
 
         if(data[0] == "HR" || data[0] == "Temperature")
@@ -19,7 +29,7 @@
         else
             type = "bar";
 
-        DrawGraph(dataset, data[0], type);
+        DrawGraph(dataset, data[0], type, dateFormat);
     }
 </script>
 

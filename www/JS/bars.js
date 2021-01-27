@@ -67,12 +67,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 //Type = "bar", "line"
-function DrawGraph(dataset, coly, type)
+function DrawGraph(dataset, coly, type, dateFormat)
 {
      dataset = dataset["data"];
-
-     console.log(dataset[0]["Time"]);
-     console.log(new Date(dataset[0]["Time"]).getMonth());
 
      // Find minimum and maximum value for our y attribute, as well as the average
      let ymin = Infinity;
@@ -88,13 +85,13 @@ function DrawGraph(dataset, coly, type)
           }
           sum += parseInt(dataset[row][coly])
      }
+     
      let avg = sum/dataset.length;
-
 
 
      // Define axes
      let textX = d3.scaleBand()
-          .domain(dataset.map(function(d) { return DateToString(d[colx], "withHour"); }))
+          .domain(dataset.map(function(d) { return DateToString(d[colx], dateFormat); }))
           .range([0,chartWidth]);
 
      let scaleX = d3.scaleBand()
@@ -207,6 +204,18 @@ function DrawGraph(dataset, coly, type)
                     .x(function(d){return scaleX(d[colx])+scaleX.bandwidth()/2;})
                     .y(function(d){return scaleY(d[coly]);}))
                     .attr("fill", "none");
+
+          // Add line at average with legend
+          let plotAvg = scaleY(avg)
+          svg.select("#AverageLineChart")
+               .attr("y1", plotAvg)
+               .attr("y2", plotAvg);
+
+          svg.select("#AverageLineText")
+               .text("Average: "+ Math.round(avg*100)/100);
+
+
+          d3.selectAll(".avgLine").raise().style("visibility", "visible");
      }
       
 }
