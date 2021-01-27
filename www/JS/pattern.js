@@ -26,10 +26,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
           .attr("transform", "translate(0," + chartHeight + ")")
 
      svg.append("text")
+          .attr("id", "XVariable")
           .attr("text-anchor", "end")
           .attr("x", chartWidth)
           .attr("y", chartHeight+margin.top+40) 
-          .text("Time");
 
 
      // Y axys
@@ -49,19 +49,21 @@ document.addEventListener("DOMContentLoaded", function(event) {
           .attr("class", "avgLine")
           .attr("x1",0)
           .attr("x2", chartWidth)
+          .style("visibility", "hidden");
 
      svg.append("line")
           .attr("class", "avgLine")
           .attr("x1", chartWidth-130)
           .attr("y1", -15)
           .attr("x2", chartWidth-90)
-          .attr("y2", -15);
+          .attr("y2", -15)
+          .style("visibility", "hidden");
 
      svg.append("text")
           .attr("id", "AverageLineText")
           .attr('x', (chartWidth-40))
           .attr("y", -10)
-          .attr("text-anchor", "middle")
+          .attr("text-anchor", "middle");
 });
 
 //Type = "bar", "line"
@@ -103,7 +105,9 @@ function DrawGraph(dataset, coly, type)
                .attr("dx", "-.8em")
                .attr("dy", ".15em")
                .attr("transform","rotate(-30)"); // can be left out for short values
-
+               
+     d3.select("#XVariable")
+          .text("Hour of Day");
      
      // Add y axis with label        
      d3.select("#YWithLabel")
@@ -111,13 +115,6 @@ function DrawGraph(dataset, coly, type)
 
      d3.select("#YVariable")
           .text(coly);
-
-
-     // Define diverging colorscale    
-     var divColor = d3.scaleLinear()
-          .domain([ymin, avg, ymax])
-          .range(["purple", "white","orange"])
-          .interpolate(d3.interpolateRgb); 
 
 
      // Define tooltip and its functions
@@ -129,7 +126,7 @@ function DrawGraph(dataset, coly, type)
           tooltip
                .style("visibility","visible")
                .style("width", chartWidth+margin.left+margin.right)
-               .text(d[coly])
+               .text(Math.round(d[coly]*100)/100)
      }
 
      function mouseOut (event,d){
@@ -142,7 +139,7 @@ function DrawGraph(dataset, coly, type)
           tooltip
                .style("visibility","visible")
                .style("width", chartWidth+margin.left+margin.right)
-               .text("Add description, more info etc.")
+               .text("")
      }
 
 
@@ -160,7 +157,7 @@ function DrawGraph(dataset, coly, type)
                .attr("y", function(d) {return scaleY(d[coly]);})
                .attr("width",scaleX.bandwidth())
                .attr("height",function(d){return chartHeight - scaleY(d[coly]);})
-               .attr("fill", function(d) { return divColor(d[coly]);})
+               .attr("fill", function(d){ return d[colx] < 15 && d[colx]> 1? "#6600cc" : "#FF9900"})             
                .on("mouseover",mouseOver)
                .on("mouseout",mouseOut)
                .on("click",mouseClick);
@@ -173,26 +170,8 @@ function DrawGraph(dataset, coly, type)
                .attr("y2", plotAvg);
 
           svg.select("#AverageLineText")
-               .text("Average: "+ Math.round(avg))
+               .text("Average: "+ Math.round(avg*100)/100)
 
-          d3.selectAll(".avgLine").raise();
+          d3.selectAll(".avgLine").raise().style("visibility", "visible");
      }
-
-
-     // Add line
-     d3.selectAll(".line").remove()
-
-     if(type=="line")
-     {
-          svg.selectAll("lines")
-               .data([dataset], function(d){return d[coly]})
-               .enter()
-               .append("path")
-               .attr("class", "line")
-               .attr("d", d3.line()
-                    .x(function(d){return scaleX(d[colx])+scaleX.bandwidth()/2;})
-                    .y(function(d){return scaleY(d[coly]);}))
-                    .attr("fill", "none");
-     }
-      
 }

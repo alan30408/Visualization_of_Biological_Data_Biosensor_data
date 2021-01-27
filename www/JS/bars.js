@@ -26,11 +26,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
           .attr("transform", "translate(0," + chartHeight + ")")
 
      svg.append("text")
+          .attr("id", "XVariable")
           .attr("text-anchor", "end")
           .attr("x", chartWidth)
-          .attr("y", chartHeight+margin.top+40) 
-          .text("Time");
-
+          .attr("y", chartHeight+margin.top+40);
 
      // Y axys
      svg.append("g")
@@ -49,13 +48,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
           .attr("class", "avgLine")
           .attr("x1",0)
           .attr("x2", chartWidth)
+          .style("visibility", "hidden");
 
      svg.append("line")
+          .attr("id", "avgLine")
           .attr("class", "avgLine")
           .attr("x1", chartWidth-130)
-          .attr("y1", -15)
           .attr("x2", chartWidth-90)
-          .attr("y2", -15);
+          .attr("y1", -15)
+          .attr("y2", -15)
+          .style("visibility", "hidden");
 
      svg.append("text")
           .attr("id", "AverageLineText")
@@ -113,7 +115,9 @@ function DrawGraph(dataset, coly, type)
                .attr("dy", ".15em")
                .attr("transform","rotate(-30)"); // can be left out for short values
 
-     
+     d3.select("#XVariable")
+          .text("Time");
+
      // Add y axis with label        
      d3.select("#YWithLabel")
           .call(d3.axisLeft(scaleY));
@@ -138,7 +142,7 @@ function DrawGraph(dataset, coly, type)
           tooltip
                .style("visibility","visible")
                .style("width", chartWidth+margin.left+margin.right)
-               .text(d[coly])
+               .text(Math.round(d[coly]*100)/100)
      }
 
      function mouseOut (event,d){
@@ -182,9 +186,10 @@ function DrawGraph(dataset, coly, type)
                .attr("y2", plotAvg);
 
           svg.select("#AverageLineText")
-               .text("Average: "+ Math.round(avg))
+               .text("Average: "+ Math.round(avg*100)/100);
 
-          d3.selectAll(".avgLine").raise();
+
+          d3.selectAll(".avgLine").raise().style("visibility", "visible");
      }
 
 
