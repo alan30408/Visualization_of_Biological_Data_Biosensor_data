@@ -34,13 +34,17 @@ class LoadingVarData:
 
         df = pd.read_csv('Data/' + fileName)
 
-        if elapsedDays > 31:
-            df['Calories'] = df['Calories'].apply(lambda x: x*60*24*31)
-            df['Steps'] = df['Steps'].apply(lambda x: x*60*24*31)
-        elif elapsedDays > 7:
-            df['Calories'] = df['Calories'].apply(lambda x: x*60*24*7)
-            df['Steps'] = df['Steps'].apply(lambda x: x*60*24*7)
-        else:
+        if timeInterval is not None:
+            if elapsedDays > 31:
+                df['Calories'] = df['Calories'].apply(lambda x: x*60*24*31)
+                df['Steps'] = df['Steps'].apply(lambda x: x*60*24*31)
+            elif elapsedDays > 7:
+                df['Calories'] = df['Calories'].apply(lambda x: x*60*24*7)
+                df['Steps'] = df['Steps'].apply(lambda x: x*60*24*7)
+            else:    
+                df['Calories'] = df['Calories'].apply(lambda x: x*60)
+                df['Steps'] = df['Steps'].apply(lambda x: x*60)
+        else:    
             df['Calories'] = df['Calories'].apply(lambda x: x*60)
             df['Steps'] = df['Steps'].apply(lambda x: x*60)
 
@@ -89,6 +93,7 @@ class LoadingVarData:
             "max_y" : max(y),
             "r_value" : r,
          }
+
         return json.dumps(ret_data)
 
 
