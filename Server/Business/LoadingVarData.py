@@ -2,6 +2,9 @@ import pandas as pd
 import os
 import json
 
+from datetime import datetime
+
+
 class LoadingVarData:
     def __init__(self):
         pass
@@ -15,6 +18,20 @@ class LoadingVarData:
         """
 
         fileName = "60min_v3.csv"
+
+        if timeInterval is not None:
+            timeFrom = datetime.strptime(timeInterval[0], '%Y-%m-%d')
+            timeTo = datetime.strptime(timeInterval[1], '%Y-%m-%d')
+            
+            elapsedTime = timeTo - timeFrom
+            elapsedDays = elapsedTime.total_seconds() / 86400
+
+            if elapsedDays > 31:
+                fileName = "1week_v3.csv"
+
+            elif elapsedDays > 7:
+                fileName = "1day_v3.csv"
+
         df = pd.read_csv('Data/' + fileName)
 
         min_values = {}
@@ -32,7 +49,6 @@ class LoadingVarData:
                 max_values[i] = s.max()
                 average_values[i] = s.mean()
             data = [df[variable].loc[mask], min_values, max_values, average_values]
-            print(data)
             return data
 
 
@@ -69,7 +85,6 @@ class LoadingVarData:
         data = LoadingVarData().LoadGeneralData(variables)
         #data = json.loads(data.to_json(orient = "records"))
         home_val = {}
-        print(data)
         for i in variables[1:]:
             s = pd.Series(data[i])
             if i == "Steps":

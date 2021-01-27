@@ -48,3 +48,24 @@ function GetVariable() {
     var variable = document.querySelector('input[name="variable"]:checked').value;
     return variable;
 }
+
+function DateToString(date, format){
+    var date = new Date(date);
+
+    var year = date.getFullYear();
+    var month = date.getMonth();
+    var day = date.getDate();
+    var hour = date.getHours();
+
+    var monthText = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][month];
+    var dayText =["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][day];
+
+    if(format == "withHour"){
+        return day + " " + monthText + " " + hour + "h";
+    }
+    else if(format == "monthDay")
+    {
+        return day + " " + monthText + " " + year;
+    }
+
+}

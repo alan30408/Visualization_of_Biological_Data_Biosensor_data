@@ -15,9 +15,9 @@
         var type = "";
 
         if(data[0] == "HR" || data[0] == "Temperature")
-            type = "bar";
-        else
             type = "line";
+        else
+            type = "bar";
 
         DrawGraph(dataset, data[0], type);
     }
@@ -25,7 +25,7 @@
 
 <header >
     <div class="w3-container">
-        <h1><b>General information</b></h1>
+        <h1><b>General data</b></h1>
         <div class="w3-section w3-bottombar w3-padding-16">
             <span class="w3-margin-right">Filter:</span> 
             

@@ -2,6 +2,8 @@ const svgWidth = 500 ;
 const svgHeight = 400;
 const margin = {top: 30, right: 30, bottom: 90, left: 30};
 
+var svg;
+
 // var	svg = d3.select("#plot")
 // 		.append("svg")
 // 		.attr("width", svgWidth + margin.left + margin.right)
@@ -40,48 +42,52 @@ const margin = {top: 30, right: 30, bottom: 90, left: 30};
 	// 	.attr("y", 0);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-var	svg = d3.select("#plot")
-		.append("svg")
-		.attr("width", svgWidth + margin.left + margin.right)
-		.attr("height", svgHeight + margin.top + margin.bottom)
-		.attr("class", "chart")
-		.append("g")
-		.attr("transform","translate(" + margin.left + "," + margin.top + ")");
-	
-	// X axys
-	svg.append("g")
-		.attr("id", "XWithLabel")
-		.attr("transform", "translate(0," + svgHeight + ")");
 
-	svg.append("text")
-		.attr("id", "XVariable")
-		.attr("text-anchor", "middle")
-		.attr("x", (svgWidth)/2)
-		.attr("y", svgHeight+margin.top+5);
+document.addEventListener("DOMContentLoaded", function(event) {
+	var	svg = d3.select("#plot")
+			.append("svg")
+			.attr("width", svgWidth + margin.left + margin.right)
+			.attr("height", svgHeight + margin.top + margin.bottom)
+			.attr("class", "chart")
+			.append("g")
+			.attr("transform","translate(" + margin.left + "," + margin.top + ")");
 
-	// Y axys
-	svg.append("g")
-		.attr("id", "YWithLabel")
+		// X axys
+		svg.append("g")
+			.attr("id", "XWithLabel")
+			.attr("transform", "translate(0," + svgHeight + ")");
 
-	svg.append("text")
-		.attr("id", "YVariable")
-		.attr("text-anchor", "start")
-		.attr("x",-20)
-		.attr("y", -10);
+		svg.append("text")
+			.attr("id", "XVariable")
+			.attr("text-anchor", "middle")
+			.attr("x", (svgWidth)/2)
+			.attr("y", svgHeight+margin.top+5);
 
-	// R value
-	svg.append("text")
-		.attr("id", "RValue")
-		.attr("text-anchor", "middle")
-		.attr("x",svgWidth-30)
-		.attr("y", -10);
-	
+		// Y axys
+		svg.append("g")
+			.attr("id", "YWithLabel")
+
+		svg.append("text")
+			.attr("id", "YVariable")
+			.attr("text-anchor", "start")
+			.attr("x",-20)
+			.attr("y", -10);
+
+		// R value
+		svg.append("text")
+			.attr("id", "RValue")
+			.attr("text-anchor", "middle")
+			.attr("x",svgWidth-30)
+			.attr("y", -10);	
+});
 
 // Heatmap Function
 function correlation_plot(variables) {	
-
+	
 	var data = LoadData(variables, null, null, "correlation");
 	var r_value = data.r_value;
+
+	console.log(data);
 
 	// set label
 	var label_unit = {
@@ -258,7 +264,7 @@ function correlation_plot(variables) {
 			.style('font-size', '10px')
 			.text(function(d){ return parseInt(d)})
 
-
+	console.log("end");
 
 	// svg.append('g')
 	// 	.selectAll("dot")

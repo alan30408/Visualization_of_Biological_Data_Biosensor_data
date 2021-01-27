@@ -50,6 +50,10 @@ def testing():
 def generalData():
     return render_template('generalData.html')
 
+@app.route('/correlatedData')
+def correlatedData():
+    return render_template('correlatedData.html')
+
 @app.route('/LoadVarData') 
 def LoadVarData():
     """

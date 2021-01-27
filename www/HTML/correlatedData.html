@@ -1,0 +1,90 @@
+<!--  Project Biosensors -->
+
+{% extends "template.html" %}
+{% block content %}
+
+<script type="text/javascript" src="{{ url_for('static', filename='JS/LoadingData.js') }}"></script>
+<script src="{{ url_for('static', filename='JS/correlation.js') }}"></script>
+
+<script type="text/javascript">
+    /*function to get the selection of the user*/
+    function CountCheckboxes() {
+        variables = [];
+
+        checkboxCalories = document.getElementById('checkboxCalories');
+        checkboxHR = document.getElementById('checkboxHR');
+        checkboxTemperature = document.getElementById('checkboxTemperature');
+        checkboxSteps = document.getElementById('checkboxSteps');
+
+        if (checkboxCalories.checked) {
+            variables.push(checkboxCalories.value);
+        }
+
+        if (checkboxHR.checked) {
+            variables.push(checkboxHR.value);
+        }
+
+        if (checkboxTemperature.checked) {
+            variables.push(checkboxTemperature.value);
+        }
+
+        if (checkboxSteps.checked) {
+            variables.push(checkboxSteps.value);
+        }
+        return variables;
+    }
+
+    /*load data and preprocess it for correlation*/
+    function Correlate() {
+        variables = CountCheckboxes();
+        console.log(variables);
+
+        var_num = variables.filter(Boolean);
+        console.log(var_num.length);
+
+        if (var_num.length > 2) {
+            document.getElementById("data").textContent = "Please choose just two variables.";
+        } else if (var_num.length <= 1){
+            document.getElementById("data").textContent = "Please choose two variables.";
+        }else {
+            correlation_plot(variables);
+        }
+    }
+</script>
+
+<header >
+    <div class="w3-container">
+        <h1><b>Correlated data</b></h1>
+        <div class="w3-section w3-bottombar w3-padding-16">
+            <span class="w3-margin-right">Filter:</span> 
+            
+            <input type="checkbox" id="checkboxCalories" name="Calories" value="Calories">
+            <label for="checkboxCalories"> Calories</label><br>
+
+            <input type="checkbox" id="checkboxHR" name="HR" value="HR" checked>
+            <label for="checkboxHR"> HR</label><br>
+
+            <input type="checkbox" id="checkboxTemperature" name="Temperature" value="Temperature">
+            <label for="checkboxTemperature"> Temperature</label><br>
+
+            <input type="checkbox" id="checkboxSteps" name="Steps" value="Steps">
+            <label for="checkboxSteps"> Steps</label><br>
+
+            <button onclick=Correlate()>Correlate</button>
+        </div>
+    </div>
+</header>
+
+
+
+<br/>
+<br/>
+<br/>
+
+<div id="data">
+</div>
+
+<div id="plot">
+</div>
+
+{% endblock %}

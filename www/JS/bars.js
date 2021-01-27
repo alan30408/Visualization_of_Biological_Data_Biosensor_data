@@ -67,7 +67,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 //Type = "bar", "line"
 function DrawGraph(dataset, coly, type)
 {
-     dataset = dataset["data"]
+     dataset = dataset["data"];
+
+     console.log(dataset[0]["Time"]);
+     console.log(new Date(dataset[0]["Time"]).getMonth());
 
      // Find minimum and maximum value for our y attribute, as well as the average
      let ymin = Infinity;
@@ -86,10 +89,16 @@ function DrawGraph(dataset, coly, type)
      let avg = sum/dataset.length;
 
 
+
      // Define axes
+     let textX = d3.scaleBand()
+          .domain(dataset.map(function(d) { return DateToString(d[colx], "withHour"); }))
+          .range([0,chartWidth]);
+
      let scaleX = d3.scaleBand()
           .domain(dataset.map(function(d) { return d[colx]; }))
           .range([0,chartWidth]);
+
      let scaleY = d3.scaleLinear()
           .domain([ymin-10, ymax])
           .range([chartHeight,0]);
@@ -97,7 +106,7 @@ function DrawGraph(dataset, coly, type)
      
      // Add x axis with label (can be rotated if too long)        
      d3.select("#XWithLabel")
-          .call(d3.axisBottom(scaleX))
+          .call(d3.axisBottom(textX))
           .selectAll("text")
                .style("text-anchor", "end")
                .attr("dx", "-.8em")
