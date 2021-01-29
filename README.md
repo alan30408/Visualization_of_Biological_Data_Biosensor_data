@@ -18,4 +18,4 @@ In the corresponding folder start the application by the command:
 
 Afterwards open the [website](http://127.0.0.1:5000/home). You will reach the homepage of the project.
 
-In the menu, different subpages can be visited which have different functionalities. General Information can be seen (selection of different paramters is possible), the correlation between two variables and also pattern can be visualized. Just explore the project work via visiting the different websites.
+Via the menu different subpages can be visited which have different functionalities. General Information can be seen (selection of different parameters is possible), the correlation between two variables and also pattern can be visualized. Just explore the project work via visiting the different websites.
