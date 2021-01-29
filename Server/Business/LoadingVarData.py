@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 import json
-
+import random
 from datetime import datetime
 
 
@@ -99,12 +99,17 @@ class LoadingVarData:
 
     def LoadHomeData(self, variables):
         data = LoadingVarData().LoadGeneralData(variables)
-        #data = json.loads(data.to_json(orient = "records"))
         home_val = {}
-        for i in variables[1:]:
-            s = pd.Series(data[i])
+        data_length = len(data)
+        random_num = random.randint(0,data_length)
+        for i in variables[0:]:
+            s = pd.Series(data[i])[random_num:random_num+24]
             if i == "Steps":
                 home_val[i] = int(s.sum())
+            elif i == "Time":
+                home_val[i] = "from "+ pd.Series(data[i])[random_num]+ " to "+ pd.Series(data[i])[random_num+24]
+            elif i == "Calories":
+                home_val[i] = "%2f" % s.sum()
             else:
                 home_val[i] = "%.2f" % s.mean()
         return json.dumps(home_val)
