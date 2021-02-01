@@ -42,32 +42,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
           .attr("x",-40)
           .attr("y", -10)
 
-
-     // avg line and text
-     svg.append("line")
-          .attr("id", "AverageLineChart")
-          .attr("class", "avgLine")
-          .attr("x1",0)
-          .attr("x2", chartWidth)
-          .style("visibility", "hidden");
-
-     svg.append("line")
-          .attr("class", "avgLine")
-          .attr("x1", chartWidth-130)
-          .attr("y1", -15)
-          .attr("x2", chartWidth-90)
-          .attr("y2", -15)
-          .style("visibility", "hidden");
-
-     svg.append("text")
-          .attr("id", "AverageLineText")
-          .attr('x', (chartWidth-40))
-          .attr("y", -10)
-          .attr("text-anchor", "middle");
 });
 
-//Type = "bar", "line"
-function DrawGraph(dataset, coly, type)
+function DrawGraph(dataset, coly)
+
+  // https://blog.risingstack.com/tutorial-d3-js-calendar-heatmap/
+
 {
      dataset = dataset["data"]
 
@@ -146,8 +126,7 @@ function DrawGraph(dataset, coly, type)
      // Add bars
      d3.selectAll(".bars").remove()
 
-     if(type=="bar")
-     {
+     
           svg.selectAll("bars")
                .data(dataset)
                .enter()
@@ -161,17 +140,5 @@ function DrawGraph(dataset, coly, type)
                .on("mouseover",mouseOver)
                .on("mouseout",mouseOut)
                .on("click",mouseClick);
-
-
-          // Add line at average with legend
-          let plotAvg = scaleY(avg)
-          svg.select("#AverageLineChart")
-               .attr("y1", plotAvg)
-               .attr("y2", plotAvg);
-
-          svg.select("#AverageLineText")
-               .text("Average: "+ Math.round(avg*100)/100)
-
-          d3.selectAll(".avgLine").raise().style("visibility", "visible");
-     }
+     
 }
