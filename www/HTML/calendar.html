@@ -7,7 +7,34 @@
 <script type="text/javascript" >
     dataset = {{ data | safe }};
 </script>
-
 <script src="{{ url_for('static', filename='JS/calendar.js') }}"></script>
+
+<script>
+    function Update()
+    {
+        data = GetVariable();
+        dataset = LoadPatternData(data);
+
+        console.log(dataset);
+
+        DrawGraph(dataset, data, "bar");
+    }
+</script>
+
+<div>
+    <input type="radio" id="radioCalories" name="variable" value="Calories">
+    <label for="radioCalories"> Calories</label><br>
+
+    <input type="radio" id="radioHR" name="variable" value="HR">
+    <label for="radioHR"> HR</label><br>
+
+    <input type="radio" id="radioTemperature" name="variable" value="Temperature">
+    <label for="radioTemperature"> Temperature</label><br>
+
+    <input type="radio" id="radioSteps" name="variable" value="Steps">
+    <label for="radioSteps"> Steps</label><br>
+
+    <button onclick=Update()>Select</button>
+</div>
 
 {% endblock %}
