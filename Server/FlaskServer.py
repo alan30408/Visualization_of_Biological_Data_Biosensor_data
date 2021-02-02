@@ -114,6 +114,10 @@ def barChart():
 def lineChart():
     return render_template('/lines.html')
 
+@app.route('/calendar')
+def Calendar():
+    return render_template('/calendar.html')
+
 @app.route('/correlation')
 def correlation():
     return render_template('/correlation.html')
