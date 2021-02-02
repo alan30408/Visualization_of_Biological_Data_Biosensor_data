@@ -7,6 +7,10 @@
 <script src="{{ url_for('static', filename='JS/bars.js') }}"></script>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+        Update();
+    });
+
     function Update()
     {
         data = GetVariable();
@@ -21,27 +25,24 @@
 <header >
     <div class="w3-container">
         <h1><b>Pattern data</b></h1>
+        <div class="w3-section w3-bottombar w3-padding-16">
+            <input type="radio" id="radioCalories" name="variable" value="Calories" checked>
+            <label for="radioCalories"> Calories</label><br>
 
-        <input type="radio" id="radioCalories" name="variable" value="Calories">
-        <label for="radioCalories"> Calories</label><br>
+            <input type="radio" id="radioHR" name="variable" value="HR">
+            <label for="radioHR"> HR</label><br>
 
-        <input type="radio" id="radioHR" name="variable" value="HR">
-        <label for="radioHR"> HR</label><br>
+            <input type="radio" id="radioTemperature" name="variable" value="Temperature">
+            <label for="radioTemperature"> Temperature</label><br>
 
-        <input type="radio" id="radioTemperature" name="variable" value="Temperature">
-        <label for="radioTemperature"> Temperature</label><br>
+            <input type="radio" id="radioSteps" name="variable" value="Steps">
+            <label for="radioSteps"> Steps</label><br>
 
-        <input type="radio" id="radioSteps" name="variable" value="Steps">
-        <label for="radioSteps"> Steps</label><br>
-
-        <button onclick=Update()>Select</button>
+            <button onclick=Update()>Select</button>
+        </div>
     </div>
 </header>
 
-<!-- div for plot -->
-<br/>
-<br/>
-<br/>
 
 <div id="data">
 </div>

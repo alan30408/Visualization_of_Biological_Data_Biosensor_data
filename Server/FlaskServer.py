@@ -100,6 +100,12 @@ def LoadPatternData():
     return json.dumps({"data": json.loads(data.to_json(orient = "records"))})
 
 
+@app.route('/LoadDailyData')
+def LoadDailyData():
+    data = loadingVarData.LoadDailyData()
+    return json.dumps({"data": json.loads(data.to_json(orient = "records"))})
+
+
 @app.route('/barChart')
 def barChart():
     return render_template('/bars.html' )

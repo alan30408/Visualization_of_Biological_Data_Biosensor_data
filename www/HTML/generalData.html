@@ -7,6 +7,10 @@
 <script src="{{ url_for('static', filename='JS/bars.js') }}"></script>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+        Update();
+    });
+
     function Update()
     {
         data = GetVariableAndDates();
@@ -37,9 +41,9 @@
     <div class="w3-container">
         <h1><b>General data</b></h1>
         <div class="w3-section w3-bottombar w3-padding-16">
-            <span class="w3-margin-right">Filter:</span> 
+            <span class="w3-margin-right">Filter:</span> <br/>
             
-            <input type="radio" id="radioCalories" name="variable" value="Calories">
+            <input type="radio" id="radioCalories" name="variable" value="Calories" checked>
             <label for="radioCalories"> Calories</label><br>
 
             <input type="radio" id="radioHR" name="variable" value="HR">
@@ -52,8 +56,8 @@
             <label for="radioSteps"> Steps</label><br>
 
 
-            <input type="date" id="dateStart" value="2015-05-20"/>
-            <input type="date" id="dateEnd" value="2015-05-21"/>
+            <input type="date" id="dateStart" value="2015-05-21"/>
+            <input type="date" id="dateEnd" value="2015-05-22"/>
 
             <button onclick=Update()>Select</button>
         </div>

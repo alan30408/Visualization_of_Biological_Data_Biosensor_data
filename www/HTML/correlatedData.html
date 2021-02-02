@@ -7,6 +7,10 @@
 <script src="{{ url_for('static', filename='JS/correlation.js') }}"></script>
 
 <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function(event) {
+        Correlate();
+    });
+
     /*function to get the selection of the user*/
     function CountCheckboxes() {
         variables = [];
@@ -56,9 +60,9 @@
     <div class="w3-container">
         <h1><b>Correlated data</b></h1>
         <div class="w3-section w3-bottombar w3-padding-16">
-            <span class="w3-margin-right">Filter:</span> 
+            <span class="w3-margin-right">Filter:</span> <br/>
             
-            <input type="checkbox" id="checkboxCalories" name="Calories" value="Calories">
+            <input type="checkbox" id="checkboxCalories" name="Calories" value="Calories" checked>
             <label for="checkboxCalories"> Calories</label><br>
 
             <input type="checkbox" id="checkboxHR" name="HR" value="HR" checked>
@@ -75,11 +79,6 @@
     </div>
 </header>
 
-
-
-<br/>
-<br/>
-<br/>
 
 <div id="data">
 </div>

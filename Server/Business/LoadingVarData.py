@@ -33,14 +33,15 @@ class LoadingVarData:
                 fileName = "1day_v3.csv"
 
         df = pd.read_csv('Data/' + fileName)
+        df['Time'] = pd.to_datetime(df['Time']) - pd.Timedelta(hours=8)
 
         if timeInterval is not None:
             if elapsedDays > 31:
-                df['Calories'] = df['Calories'].apply(lambda x: x*60*24*31)
-                df['Steps'] = df['Steps'].apply(lambda x: x*60*24*31)
-            elif elapsedDays > 7:
                 df['Calories'] = df['Calories'].apply(lambda x: x*60*24*7)
                 df['Steps'] = df['Steps'].apply(lambda x: x*60*24*7)
+            elif elapsedDays > 7:
+                df['Calories'] = df['Calories'].apply(lambda x: x*60*24)
+                df['Steps'] = df['Steps'].apply(lambda x: x*60*24)
             else:    
                 df['Calories'] = df['Calories'].apply(lambda x: x*60)
                 df['Steps'] = df['Steps'].apply(lambda x: x*60)
@@ -55,8 +56,7 @@ class LoadingVarData:
         if timeInterval == None:
             return df[variable]
         else:
-            df['DateTime'] = pd.to_datetime(df['Time'])
-            mask = (df['DateTime'] > timeInterval[0]) & (df['DateTime'] <= timeInterval[1])
+            mask = (df['Time'] > timeInterval[0]) & (df['Time'] <= timeInterval[1])
 
             for i in variable[1:]:
                 s = pd.Series(df[i].loc[mask])
@@ -107,9 +107,22 @@ class LoadingVarData:
             if i == "Steps":
                 home_val[i] = int(s.sum())
             elif i == "Time":
-                home_val[i] = "from "+ pd.Series(data[i])[random_num]+ " to "+ pd.Series(data[i])[random_num+24]
+                home_val[i] = "from "+ pd.Series(data[i])[random_num].strftime("%w %b %Y") + " to "+ pd.Series(data[i])[random_num+24].strftime("%w %b %Y")
             elif i == "Calories":
                 home_val[i] = "%2f" % s.sum()
             else:
                 home_val[i] = "%.2f" % s.mean()
         return json.dumps(home_val)
+
+    def LoadDailyData(self):
+        fileName = "1day_v3.csv"
+        df = pd.read_csv('Data/' + fileName)
+
+        df['Time'] = pd.to_datetime(df['Time'])
+        [dt.date() for dt in df['Time']]
+
+
+        df['Calories'] = df['Calories'].apply(lambda x: x*60*24)
+        df['Steps'] = df['Steps'].apply(lambda x: x*60*24)
+
+        return df

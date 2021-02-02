@@ -31,3 +31,13 @@ function LoadPatternData(variable)
     var data = HttpGet(url);
     return JSON.parse(data);
 }
+
+console.log(LoadDailyData());
+function LoadDailyData()
+{
+    var baseUrl = "http://127.0.0.1:5000/LoadDailyData";
+    url = baseUrl;
+
+    var data = HttpGet(url);
+    return JSON.parse(data);
+}

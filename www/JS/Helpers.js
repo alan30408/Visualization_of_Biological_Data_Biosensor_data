@@ -52,6 +52,7 @@ function GetVariable() {
 function DateToString(date, format){
     var orgDate = date;
     var date = new Date(date);
+    date.setHours(date.getHours() - 3);
 
     var year = date.getFullYear();
     var month = date.getMonth();
