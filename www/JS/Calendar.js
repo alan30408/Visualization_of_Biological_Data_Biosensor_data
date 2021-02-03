@@ -6,6 +6,7 @@ var svg;
 var chartWidth = 1080;
 var chartHeight = 300;
 const margin = {top: 30, right: 30, bottom: 80, left: 50};
+const boxSize = 20;
 
 document.addEventListener("DOMContentLoaded", function(event) {
      // Specify columns that should be used as data for x and y
@@ -45,33 +46,36 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 function DrawGraph(dataset, coly)
-
-  // https://blog.risingstack.com/tutorial-d3-js-calendar-heatmap/
-
 {
      dataset = dataset["data"]
 
-     // Find minimum and maximum value for our y attribute, as well as the average
-     let ymin = Infinity;
+     // Find maximum value for our y attribute, as well as the average
      let ymax = -Infinity;
      let sum = 0;
 
      for (row=0;row<dataset.length;row++){ 
-          if(dataset[row][coly] < ymin){
-               ymin = dataset[row][coly]
-          }
           if(dataset[row][coly] > ymax){
                ymax = dataset[row][coly]
           }
-          sum += parseInt(dataset[row][coly])
+          
      }
-     let avg = sum/dataset.length;
 
+     ymin = 0
 
      // Define axes
+     let textX = d3.scaleBand()
+          .domain(dataset.map(function(d) { return DateToString(d[colx], "monthYear"); }))
+          .range([0,chartWidth]);
+
      let scaleX = d3.scaleBand()
           .domain(dataset.map(function(d) { return d[colx]; }))
           .range([0,chartWidth]);
+
+
+     let textY = d3.scaleLinear()
+          .domain([1,30])
+          .range([chartHeight,0]);
+
      let scaleY = d3.scaleLinear()
           .domain([ymin-10, ymax])
           .range([chartHeight,0]);
@@ -79,7 +83,7 @@ function DrawGraph(dataset, coly)
      
      // Add x axis with label (can be rotated if too long)        
      d3.select("#XWithLabel")
-          .call(d3.axisBottom(scaleX))
+          .call(d3.axisBottom(textX))
           .selectAll("text")
                .style("text-anchor", "end")
                .attr("dx", "-.8em")
@@ -87,14 +91,21 @@ function DrawGraph(dataset, coly)
                .attr("transform","rotate(-30)"); // can be left out for short values
                
      d3.select("#XVariable")
-          .text("Hour of Day");
+          .text("Month");
      
      // Add y axis with label        
      d3.select("#YWithLabel")
-          .call(d3.axisLeft(scaleY));
+          .call(d3.axisLeft(textY));
 
      d3.select("#YVariable")
-          .text(coly);
+          .text("Day");
+
+
+     // Define diverging colorscale    
+     var divColor = d3.scaleLinear()
+          .domain([ymin, ymax])
+          .range(["white", "orange"])
+          .interpolate(d3.interpolateRgb);
 
 
      // Define tooltip and its functions
@@ -126,17 +137,18 @@ function DrawGraph(dataset, coly)
      // Add bars
      d3.selectAll(".bars").remove()
 
-     
           svg.selectAll("bars")
                .data(dataset)
                .enter()
                .append("rect")
                .attr("class", function(d) {return "bars"})
                .attr("x", function(d){return scaleX(d[colx]);})
+               //.attr("x",function(d){return textX(DateToString(d[colx], "monthDay"));} )
                .attr("y", function(d) {return scaleY(d[coly]);})
-               .attr("width",scaleX.bandwidth())
-               .attr("height",function(d){return chartHeight - scaleY(d[coly]);})
-               .attr("fill", function(d){ return d[colx] < 15 && d[colx]> 1? "#6600cc" : "#FF9900"})             
+               //.attr("y", function(d) {return textY(d[coly]);})
+               .attr("width", boxSize)
+               .attr("height", boxSize)
+               .attr("fill", function(d) { return divColor(d[coly]);})          
                .on("mouseover",mouseOver)
                .on("mouseout",mouseOut)
                .on("click",mouseClick);

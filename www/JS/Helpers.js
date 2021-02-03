@@ -69,6 +69,17 @@ function DateToString(date, format){
     {
         return day + " " + monthText + " " + year;
     }
+
+    else if (format == "monthYear")
+    {
+        return monthText + " " + year;
+    }
+
+    else if (format == "day")
+    {
+        return day;
+    }
+
     else if(format == "none"){
         return orgDate;
     }
