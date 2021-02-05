@@ -98,20 +98,25 @@ class LoadingVarData:
 
 
     def LoadHomeData(self, variables):
-        data = LoadingVarData().LoadGeneralData(variables)
+        data = LoadingVarData().LoadDailyData()
         home_val = {}
+        home_val["add_inf"] = ""
         data_length = len(data)
         random_num = random.randint(0,data_length)
         for i in variables[0:]:
-            s = pd.Series(data[i])[random_num:random_num+24]
+            s = pd.Series(data[i])[random_num]
             if i == "Steps":
-                home_val[i] = int(s.sum())
+                home_val[i] = int(s)
+                if int(s) > 10000:
+                    home_val["add_inf"] += "\nWow! More than 10000 steps!"
             elif i == "Time":
-                home_val[i] = "from "+ pd.Series(data[i])[random_num].strftime("%w %b %Y") + " to "+ pd.Series(data[i])[random_num+24].strftime("%w %b %Y")
+                home_val[i] = pd.Series(data[i])[random_num].strftime("%d %B %Y")
             elif i == "Calories":
-                home_val[i] = "%2f" % s.sum()
+                home_val[i] = int(s)
+                if int(s) > 3000:
+                    home_val["add_inf"] += "\nYou burnt more than 3000 calories - what a sporty day."
             else:
-                home_val[i] = "%.2f" % s.mean()
+                home_val[i] = "%.2f" % s
         return json.dumps(home_val)
 
     def LoadDailyData(self):
