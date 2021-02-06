@@ -121,16 +121,13 @@ function DrawGraph(dataset, coly)
      }
 
      function mouseOut (event,d){
+          console.log(d);
           tooltip
           .style("visibility","hidden")
           }
 
      function mouseClick (event,d){
-          d3.select(event.currentTarget)
-          tooltip
-               .style("visibility","visible")
-               .style("width", chartWidth+margin.left+margin.right)
-               .text("")
+          location.href = "generalData?date=" + DateToString(d.Time, "getParameter");
      }
 
 

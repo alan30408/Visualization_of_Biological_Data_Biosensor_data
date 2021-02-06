@@ -115,7 +115,7 @@ def lineChart():
     return render_template('/lines.html')
 
 @app.route('/calendar')
-def Calendar():
+def calendar():
     return render_template('/calendar.html')
 
 @app.route('/correlation')

@@ -8,6 +8,23 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function(event) {
+        var urlParams = parseURLParams(window.location.href);
+        console.log(urlParams);
+
+        if(urlParams.date != null)
+        {
+            console.log(urlParams.date[0]);
+
+            var dateFrom = new Date(urlParams.date[0]);
+            var dateTo = new Date(urlParams.date);
+            var dateTo = dateTo.setDate(dateTo.getDate() + 1);
+
+            console.log(DateToString(dateFrom, "getParameter"));
+            console.log(DateToString(dateTo, "getParameter"));
+            document.getElementById('dateStart').value =  DateToString(dateFrom, "getParameter");
+            document.getElementById('dateEnd').value = DateToString(dateTo, "getParameter");
+        }
+
         Update();
     });
 
