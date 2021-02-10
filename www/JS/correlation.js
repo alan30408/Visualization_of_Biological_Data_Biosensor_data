@@ -2,47 +2,6 @@ const svgWidth = 500 ;
 const svgHeight = 400;
 const margin = {top: 30, right: 30, bottom: 90, left: 30};
 
-var svg;
-
-// var	svg = d3.select("#plot")
-// 		.append("svg")
-// 		.attr("width", svgWidth + margin.left + margin.right)
-// 		.attr("height", svgHeight + margin.top + margin.bottom)
-// 		.attr("class", "chart")
-// 		.append("g")
-// 		.attr("transform","translate(" + margin.left + "," + margin.top + ")");
-
-	// // X axys
-	// svg.append("g")
-	// 	.attr("id", "XWithLabel")
-	// 	.attr("transform", "translate(0," + svgHeight + ")");
-
-	// svg.append("text")
-	// 	.attr("id", "XVariable")
-	// 	// .attr("text-anchor", "end")
-	// 	.attr("x", (svgWidth - margin.left - margin.right)/2)
-	// 	.attr("y", svgHeight+margin.top+10);
-
-
-	// // Y axys
-	// svg.append("g")
-	// 	.attr("id", "YWithLabel")
-
-	// svg.append("text")
-	// 	.attr("id", "YVariable")
-	// 	.attr("text-anchor", "middle")
-	// 	.attr("x",0)
-	// 	.attr("y", -10);
-	
-	// // R value
-	// svg.append("text")
-	// 	.attr("id", "RValue")
-	// 	.attr("text-anchor", "middle")
-	// 	.attr("x",svgWidth-30)
-	// 	.attr("y", 0);
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 document.addEventListener("DOMContentLoaded", function(event) {
 	svg = d3.select("#plot")
 			.append("svg")
@@ -223,8 +182,6 @@ function correlation_plot(variables) {
 	// Remove data one time per click
 	d3.selectAll(".dot").remove()
 
-	console.log(svg);
-
 	// append the dot to the svg element
 	svg.append('g')
 		.selectAll()
@@ -269,19 +226,4 @@ function correlation_plot(variables) {
 			.text(function(d){ return parseInt(d)})
 
 	console.log("end");
-
-	// svg.append('g')
-	// 	.selectAll("dot")
-	// 	.data(data.data)
-	// 	.enter()
-	// 	.append("circle")
-	// 		.attr("cx", function (d) { return x_label(d[0]); } )
-	// 		.attr("cy", function (d) { return y_label(d[1]); } )
-	// 		.attr("class", function(d) {return "dot"})
-	// 		.style("fill",  "#b36969" )
-	// 		.attr("r", 3)
-	// 		.attr("stroke", "black")
-	// 	.on("mouseover",mouseOver)
-	// 	.on("mouseout",mouseOut);
-
 }
