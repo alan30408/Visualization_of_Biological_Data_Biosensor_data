@@ -68,6 +68,11 @@ class LoadingVarData:
 
 
     def LoadCorrelatedData(self, variables):
+        """
+        Load correlated data
+
+        variable: 'Times', 'Calories', 'HR', 'Temperature', 'Steps' (two variables given)
+        """
 
         data = LoadingVarData().LoadGeneralData(variables)
         x_values = []
@@ -76,8 +81,10 @@ class LoadingVarData:
         xyData = []
 
         for i in data:
+            #no None values in returned data
             if i[variables[1]] == None or i[variables[2]] == None:
                 continue
+            #save data for both attributes (as tuple and separated)
             else:
                 xyData.append((i[variables[1]], i[variables[2]]))
                 x_values.append(i[variables[1]])
@@ -98,35 +105,48 @@ class LoadingVarData:
 
 
     def LoadHomeData(self, variables):
+        """
+        Load home data
+
+        variables: 'Times', 'Calories', 'HR', 'Temperature', 'Steps'
+        """
         data = LoadingVarData().LoadDailyData()
+
+        #dictionary to save information which should be displayed
         home_val = {}
         home_val["add_inf"] = ""
+
+        #choose a random day in data set
         data_length = len(data)
         random_num = random.randint(0,data_length)
-        for i in variables[0:]:
+
+        #fill dictionary with certain values to show on homepage
+        for i in variables:
             s = pd.Series(data[i])[random_num]
             if i == "Steps":
                 home_val[i] = int(s)
                 if int(s) > 10000:
-                    home_val["add_inf"] += "\nWow! More than 10000 steps!"
+                    home_val["add_inf"] += "Wow! More than 10000 steps!"
             elif i == "Time":
                 home_val[i] = pd.Series(data[i])[random_num].strftime("%d %B %Y")
             elif i == "Calories":
                 home_val[i] = int(s)
                 if int(s) > 3000:
-                    home_val["add_inf"] += "\nYou burnt more than 3000 calories - what a sporty day."
+                    home_val["add_inf"] += "\nYou've burnt more than 3000 calories - what a sporty day."
             else:
                 home_val[i] = "%.2f" % s
+
         return json.dumps(home_val)
 
     def LoadDailyData(self):
+        #load data summarized by day
         fileName = "1day_v3.csv"
         df = pd.read_csv('Data/' + fileName)
 
         df['Time'] = pd.to_datetime(df['Time'])
         [dt.date() for dt in df['Time']]
 
-
+        #bring values into daily format
         df['Calories'] = df['Calories'].apply(lambda x: x*60*24)
         df['Steps'] = df['Steps'].apply(lambda x: x*60*24)
 

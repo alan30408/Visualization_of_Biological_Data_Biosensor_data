@@ -1,3 +1,5 @@
+/* Project Biosensors - Jenko Schneider Stickel Tung */
+
 function HttpGet(theUrl)
 {
     var xmlHttp = new XMLHttpRequest();

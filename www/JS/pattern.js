@@ -1,4 +1,4 @@
-/* Project Biosensors */
+/* Project Biosensors - Jenko Schneider Stickel Tung */
 
 var svg;
 

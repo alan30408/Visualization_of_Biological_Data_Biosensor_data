@@ -1,4 +1,4 @@
-/* Project Biosensors */
+/* Project Biosensors - Jenko Schneider Stickel Tung */
 // Help for line plot part: https://www.d3-graph-gallery.com/graph/line_change_data.html
 
 //Load dataset

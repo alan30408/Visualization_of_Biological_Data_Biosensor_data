@@ -1,9 +1,3 @@
-#/***
-# * @author Marco Schaefer 
-# * @author Mathias Witte Paz
-# *  
-# ***/
-
 #!flask/bin/python
 from flask import Flask, render_template, redirect, url_for, request, jsonify
 from random import randrange
@@ -80,9 +74,11 @@ def LoadVarData():
     elif request.args.get('method') == "correlation":
         data = loadingVarData.LoadCorrelatedData(variables)
         return data
+    #load data for homepage
     elif request.args.get('method') == "home":
         data = loadingVarData.LoadHomeData(variables)
         return data
+    #load data for pattern
     elif request.args.get('method') == "pattern":
         data = loadingPatternData.LoadPatternData(variables)
         return data
