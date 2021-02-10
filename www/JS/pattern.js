@@ -3,7 +3,7 @@
 var svg;
 
 // Dimensions of chart and margin
-var chartWidth = 1080;
+var chartWidth = 1220;
 var chartHeight = 300;
 const margin = {top: 30, right: 30, bottom: 80, left: 50};
 
@@ -116,6 +116,12 @@ function DrawGraph(dataset, coly, type)
      d3.select("#YVariable")
           .text(coly);
 
+     // Define diverging colorscale    
+     var divColor = d3.scaleLinear()
+          .domain([ymin, avg, ymax])
+          .range(["purple", "white","orange"])
+          .interpolate(d3.interpolateRgb); 
+
 
      // Define tooltip and its functions
      let tooltip = d3.select("#tooltip")
@@ -157,7 +163,7 @@ function DrawGraph(dataset, coly, type)
                .attr("y", function(d) {return scaleY(d[coly]);})
                .attr("width",scaleX.bandwidth())
                .attr("height",function(d){return chartHeight - scaleY(d[coly]);})
-               .attr("fill", function(d){ return d[colx] < 15 && d[colx]> 1? "#6600cc" : "#FF9900"})             
+               .attr("fill", function(d) { return divColor(d[coly]);})
                .on("mouseover",mouseOver)
                .on("mouseout",mouseOut)
                .on("click",mouseClick);
