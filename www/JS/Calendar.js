@@ -3,8 +3,8 @@
 var svg;
 
 // Dimensions of chart and margin
-var chartWidth = 1080;
-var chartHeight = 300;
+var chartWidth = 500;
+var chartHeight = 600;
 const margin = {top: 30, right: 30, bottom: 80, left: 50};
 const boxSize = 20;
 
@@ -51,33 +51,25 @@ function DrawGraph(dataset, coly)
 
      // Find maximum value for our y attribute, as well as the average
      let ymax = -Infinity;
-     let sum = 0;
+     let ymin = Infinity;
 
      for (row=0;row<dataset.length;row++){ 
           if(dataset[row][coly] > ymax){
                ymax = dataset[row][coly]
           }
-          
+          if(dataset[row][coly] < ymin){
+               if (dataset[row][coly] > 0)
+                    {ymin = dataset[row][coly]}
+          }
      }
-
-     ymin = 0
 
      // Define axes
      let textX = d3.scaleBand()
           .domain(dataset.map(function(d) { return DateToString(d[colx], "monthYear"); }))
           .range([0,chartWidth]);
 
-     let scaleX = d3.scaleBand()
-          .domain(dataset.map(function(d) { return d[colx]; }))
-          .range([0,chartWidth]);
-
-
-     let textY = d3.scaleLinear()
-          .domain([1,30])
-          .range([chartHeight,0]);
-
-     let scaleY = d3.scaleLinear()
-          .domain([ymin-10, ymax])
+     let textY = d3.scaleBand()
+          .domain(dataset.map(function(d) { return DateToString(d[colx], "day"); }))
           .range([chartHeight,0]);
      
      
@@ -121,7 +113,7 @@ function DrawGraph(dataset, coly)
      }
 
      function mouseOut (event,d){
-          console.log(d);
+          console.log(DateToString(d[colx], "monthDay"));
           tooltip
           .style("visibility","hidden")
           }
@@ -139,10 +131,8 @@ function DrawGraph(dataset, coly)
                .enter()
                .append("rect")
                .attr("class", function(d) {return "bars"})
-               .attr("x", function(d){return scaleX(d[colx]);})
-               //.attr("x",function(d){return textX(DateToString(d[colx], "monthDay"));} )
-               .attr("y", function(d) {return scaleY(d[coly]);})
-               //.attr("y", function(d) {return textY(d[coly]);})
+               .attr("x", function(d){return textX(DateToString(d[colx], "monthYear"))+12;})
+               .attr("y", function(d) {return textY(DateToString(d[colx],"day"));})
                .attr("width", boxSize)
                .attr("height", boxSize)
                .attr("fill", function(d) { return divColor(d[coly]);})          
