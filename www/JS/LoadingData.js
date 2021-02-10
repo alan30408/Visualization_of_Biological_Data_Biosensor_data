@@ -1,3 +1,5 @@
+/* Project Biosensors - Jenko Schneider Stickel Tung */
+
 function LoadData(variables,timeIntervalStart=null, timeIntervalEnd=null, method=null) {
     var baseUrl = "http://127.0.0.1:5000/LoadVarData?";
 
@@ -27,6 +29,15 @@ function LoadPatternData(variable)
     var data = "variable=" + variable;
 
     url = baseUrl + data;
+
+    var data = HttpGet(url);
+    return JSON.parse(data);
+}
+
+function LoadDailyData()
+{
+    var baseUrl = "http://127.0.0.1:5000/LoadDailyData";
+    url = baseUrl;
 
     var data = HttpGet(url);
     return JSON.parse(data);

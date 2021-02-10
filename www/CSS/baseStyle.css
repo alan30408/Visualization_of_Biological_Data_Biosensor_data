@@ -1,4 +1,4 @@
-/* Project Biosensors */
+/* Project Biosensors Jenko Schneider Stickel Tung */
 
 table{
     border: 1px solid ;
@@ -49,4 +49,11 @@ body{
 .line{
   stroke-width: 2px;
   stroke: red;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 200px;            /* Footer height */
 }

@@ -1,9 +1,3 @@
-#/***
-# * @author Marco Schaefer 
-# * @author Mathias Witte Paz
-# *  
-# ***/
-
 #!flask/bin/python
 from flask import Flask, render_template, redirect, url_for, request, jsonify
 from random import randrange
@@ -80,9 +74,11 @@ def LoadVarData():
     elif request.args.get('method') == "correlation":
         data = loadingVarData.LoadCorrelatedData(variables)
         return data
+    #load data for homepage
     elif request.args.get('method') == "home":
         data = loadingVarData.LoadHomeData(variables)
         return data
+    #load data for pattern
     elif request.args.get('method') == "pattern":
         data = loadingPatternData.LoadPatternData(variables)
         return data
@@ -100,6 +96,12 @@ def LoadPatternData():
     return json.dumps({"data": json.loads(data.to_json(orient = "records"))})
 
 
+@app.route('/LoadDailyData')
+def LoadDailyData():
+    data = loadingVarData.LoadDailyData()
+    return json.dumps({"data": json.loads(data.to_json(orient = "records"))})
+
+
 @app.route('/barChart')
 def barChart():
     return render_template('/bars.html' )
@@ -107,6 +109,10 @@ def barChart():
 @app.route('/lineChart')
 def lineChart():
     return render_template('/lines.html')
+
+@app.route('/calendar')
+def calendar():
+    return render_template('/calendar.html')
 
 @app.route('/correlation')
 def correlation():

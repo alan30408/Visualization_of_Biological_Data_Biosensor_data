@@ -1,3 +1,5 @@
+<!--  Project Biosensors - Jenko Schneider Stickel Tung -->
+
 {% extends "template.html" %}
 {% block content %}
 
@@ -10,6 +12,7 @@
         document.getElementById("steps").textContent = "Steps made: " + data["Steps"].toString();
         document.getElementById("HR").textContent = "Average HR: " + data["HR"].toString();
         document.getElementById("calories").textContent = "Burnt Calories: " + data["Calories"].toString();
+        document.getElementById("addinf").textContent = data["add_inf"].toString();
     });
 </script>
 
@@ -17,7 +20,7 @@
     <div class="w3-container">
         <h1><b>Home</b></h1>
         <h3>Welcome! Explore your tracked data and get to know your lifestyle and your body a bit more.</h3>
-        <h5>Intersting to see your activeness in the randomly chosen 24 hours. Your average HR and burnt Calories are shown as well as all steps you took over the time. You are good on track to a healthy lifestyle.</h5>
+        <h5>Interesting to see your activeness on the randomly chosen day. Your average HR and burnt Calories are shown as well as all steps you took over the day. You are good on track to a healthy lifestyle.</h5>
     </div>
 </header>
   
@@ -28,6 +31,8 @@
         <span id="steps"></span> <br/>
         <span id="HR"></span> <br/>
         <span id="calories"></span> <br/>
+    </div>
+    <div id="addinf">
     </div>
 </div>
 

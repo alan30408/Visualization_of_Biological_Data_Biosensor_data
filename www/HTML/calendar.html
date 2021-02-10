@@ -4,60 +4,29 @@
 {% block content %}
 
 <script type="text/javascript" src="{{ url_for('static', filename='JS/LoadingData.js') }}"></script>
-<script src="{{ url_for('static', filename='JS/bars.js') }}"></script>
+<script src="{{ url_for('static', filename='JS/calendar.js') }}"></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function(event) {
-        var urlParams = parseURLParams(window.location.href);
-        console.log(urlParams);
-
-        if(urlParams.date != null)
-        {
-            console.log(urlParams.date[0]);
-
-            var dateFrom = new Date(urlParams.date[0]);
-            var dateTo = new Date(urlParams.date);
-            var dateTo = dateTo.setDate(dateTo.getDate() + 1);
-
-            console.log(DateToString(dateFrom, "getParameter"));
-            console.log(DateToString(dateTo, "getParameter"));
-            document.getElementById('dateStart').value =  DateToString(dateFrom, "getParameter");
-            document.getElementById('dateEnd').value = DateToString(dateTo, "getParameter");
-        }
-
         Update();
     });
 
     function Update()
     {
-        data = GetVariableAndDates();
-        dataset = LoadData(data[0], data[1], data[2]);
+        data = GetVariable();
+        dataset = LoadDailyData(data);
 
-        var dateFrom = new Date(data[1]);
-        var dateTo = new Date(data[2]);
+        console.log(dataset);
 
-        var difference = Math.ceil(Math.abs(dateTo - dateFrom) / (1000 * 60 * 60 * 24));
-        var dateFormat = "withHour";
-
-        if(difference > 7){
-            dateFormat = "monthDay";
-        }
-
-        var type = "";
-
-        if(data[0] == "HR" || data[0] == "Temperature")
-            type = "line";
-        else
-            type = "bar";
-
-        DrawGraph(dataset, data[0], type, dateFormat);
+        DrawGraph(dataset, data, "bar");
     }
 </script>
+
+
 
 <header >
     <div class="w3-container">
         <h1><b>General data</b></h1>
-        <h5>Choose one variable you want to be visualized over the selected time span.</h5>
         <div class="w3-section w3-bottombar w3-padding-16">
             <span class="w3-margin-right">Filter:</span> <br/>
             
@@ -84,5 +53,7 @@
 
 <!-- div for plot -->
 <div id="plot"></div>
+
+<div id="tooltip"></div>
 
 {% endblock %}

@@ -15,6 +15,8 @@ class LoadingPatternData:
 
         fileName = "hour_of_day_grouping.csv"
         df = pd.read_csv('Data/' + fileName)
+        df["Time"] = (df["Time"] + (24-8)) % 24
+        df = df.sort_values(by=['Time'])
 
         df['Calories'] = df['Calories'].apply(lambda x: x*60)
         df['Steps'] = df['Steps'].apply(lambda x: x*60)

@@ -1,3 +1,5 @@
+/* Project Biosensors - Jenko Schneider Stickel Tung */
+
 const svgWidth = 500 ;
 const svgHeight = 400;
 const margin = {top: 30, right: 30, bottom: 90, left: 30};

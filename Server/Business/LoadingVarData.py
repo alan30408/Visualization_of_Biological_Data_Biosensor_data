@@ -33,14 +33,15 @@ class LoadingVarData:
                 fileName = "1day_v3.csv"
 
         df = pd.read_csv('Data/' + fileName)
+        df['Time'] = pd.to_datetime(df['Time']) - pd.Timedelta(hours=8)
 
         if timeInterval is not None:
             if elapsedDays > 31:
-                df['Calories'] = df['Calories'].apply(lambda x: x*60*24*31)
-                df['Steps'] = df['Steps'].apply(lambda x: x*60*24*31)
-            elif elapsedDays > 7:
                 df['Calories'] = df['Calories'].apply(lambda x: x*60*24*7)
                 df['Steps'] = df['Steps'].apply(lambda x: x*60*24*7)
+            elif elapsedDays > 7:
+                df['Calories'] = df['Calories'].apply(lambda x: x*60*24)
+                df['Steps'] = df['Steps'].apply(lambda x: x*60*24)
             else:    
                 df['Calories'] = df['Calories'].apply(lambda x: x*60)
                 df['Steps'] = df['Steps'].apply(lambda x: x*60)
@@ -55,8 +56,7 @@ class LoadingVarData:
         if timeInterval == None:
             return df[variable]
         else:
-            df['DateTime'] = pd.to_datetime(df['Time'])
-            mask = (df['DateTime'] > timeInterval[0]) & (df['DateTime'] <= timeInterval[1])
+            mask = (df['Time'] > timeInterval[0]) & (df['Time'] <= timeInterval[1])
 
             for i in variable[1:]:
                 s = pd.Series(df[i].loc[mask])
@@ -68,6 +68,11 @@ class LoadingVarData:
 
 
     def LoadCorrelatedData(self, variables):
+        """
+        Load correlated data
+
+        variable: 'Times', 'Calories', 'HR', 'Temperature', 'Steps' (two variables given)
+        """
 
         data = LoadingVarData().LoadGeneralData(variables)
         x_values = []
@@ -76,8 +81,10 @@ class LoadingVarData:
         xyData = []
 
         for i in data:
+            #no None values in returned data
             if i[variables[1]] == None or i[variables[2]] == None:
                 continue
+            #save data for both attributes (as tuple and separated)
             else:
                 xyData.append((i[variables[1]], i[variables[2]]))
                 x_values.append(i[variables[1]])
@@ -98,18 +105,49 @@ class LoadingVarData:
 
 
     def LoadHomeData(self, variables):
-        data = LoadingVarData().LoadGeneralData(variables)
+        """
+        Load home data
+
+        variables: 'Times', 'Calories', 'HR', 'Temperature', 'Steps'
+        """
+        data = LoadingVarData().LoadDailyData()
+
+        #dictionary to save information which should be displayed
         home_val = {}
+        home_val["add_inf"] = ""
+
+        #choose a random day in data set
         data_length = len(data)
         random_num = random.randint(0,data_length)
-        for i in variables[0:]:
-            s = pd.Series(data[i])[random_num:random_num+24]
+
+        #fill dictionary with certain values to show on homepage
+        for i in variables:
+            s = pd.Series(data[i])[random_num]
             if i == "Steps":
-                home_val[i] = int(s.sum())
+                home_val[i] = int(s)
+                if int(s) > 10000:
+                    home_val["add_inf"] += "Wow! More than 10000 steps!"
             elif i == "Time":
-                home_val[i] = "from "+ pd.Series(data[i])[random_num]+ " to "+ pd.Series(data[i])[random_num+24]
+                home_val[i] = pd.Series(data[i])[random_num].strftime("%d %B %Y")
             elif i == "Calories":
-                home_val[i] = "%2f" % s.sum()
+                home_val[i] = int(s)
+                if int(s) > 3000:
+                    home_val["add_inf"] += "\nYou've burnt more than 3000 calories - what a sporty day."
             else:
-                home_val[i] = "%.2f" % s.mean()
+                home_val[i] = "%.2f" % s
+
         return json.dumps(home_val)
+
+    def LoadDailyData(self):
+        #load data summarized by day
+        fileName = "1day_v3.csv"
+        df = pd.read_csv('Data/' + fileName)
+
+        df['Time'] = pd.to_datetime(df['Time'])
+        [dt.date() for dt in df['Time']]
+
+        #bring values into daily format
+        df['Calories'] = df['Calories'].apply(lambda x: x*60*24)
+        df['Steps'] = df['Steps'].apply(lambda x: x*60*24)
+
+        return df

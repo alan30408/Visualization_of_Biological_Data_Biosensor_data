@@ -3,9 +3,10 @@
 var svg;
 
 // Dimensions of chart and margin
-var chartWidth = 1080;
-var chartHeight = 300;
+var chartWidth = 500;
+var chartHeight = 600;
 const margin = {top: 30, right: 30, bottom: 80, left: 50};
+const boxSize = 20;
 
 document.addEventListener("DOMContentLoaded", function(event) {
      // Specify columns that should be used as data for x and y
@@ -42,64 +43,39 @@ document.addEventListener("DOMContentLoaded", function(event) {
           .attr("x",-40)
           .attr("y", -10)
 
-
-     // avg line and text
-     svg.append("line")
-          .attr("id", "AverageLineChart")
-          .attr("class", "avgLine")
-          .attr("x1",0)
-          .attr("x2", chartWidth)
-          .style("visibility", "hidden");
-
-     svg.append("line")
-          .attr("class", "avgLine")
-          .attr("x1", chartWidth-130)
-          .attr("y1", -15)
-          .attr("x2", chartWidth-90)
-          .attr("y2", -15)
-          .style("visibility", "hidden");
-
-     svg.append("text")
-          .attr("id", "AverageLineText")
-          .attr('x', (chartWidth-40))
-          .attr("y", -10)
-          .attr("text-anchor", "middle");
 });
 
-//Type = "bar", "line"
-function DrawGraph(dataset, coly, type)
+function DrawGraph(dataset, coly)
 {
      dataset = dataset["data"]
 
-     // Find minimum and maximum value for our y attribute, as well as the average
-     let ymin = Infinity;
+     // Find maximum value for our y attribute, as well as the average
      let ymax = -Infinity;
-     let sum = 0;
+     let ymin = Infinity;
 
      for (row=0;row<dataset.length;row++){ 
-          if(dataset[row][coly] < ymin){
-               ymin = dataset[row][coly]
-          }
           if(dataset[row][coly] > ymax){
                ymax = dataset[row][coly]
           }
-          sum += parseInt(dataset[row][coly])
+          if(dataset[row][coly] < ymin){
+               if (dataset[row][coly] > 0)
+                    {ymin = dataset[row][coly]}
+          }
      }
-     let avg = sum/dataset.length;
-
 
      // Define axes
-     let scaleX = d3.scaleBand()
-          .domain(dataset.map(function(d) { return d[colx]; }))
+     let textX = d3.scaleBand()
+          .domain(dataset.map(function(d) { return DateToString(d[colx], "monthYear"); }))
           .range([0,chartWidth]);
-     let scaleY = d3.scaleLinear()
-          .domain([ymin-10, ymax])
+
+     let textY = d3.scaleBand()
+          .domain(dataset.map(function(d) { return DateToString(d[colx], "day"); }))
           .range([chartHeight,0]);
      
      
      // Add x axis with label (can be rotated if too long)        
      d3.select("#XWithLabel")
-          .call(d3.axisBottom(scaleX))
+          .call(d3.axisBottom(textX))
           .selectAll("text")
                .style("text-anchor", "end")
                .attr("dx", "-.8em")
@@ -107,14 +83,21 @@ function DrawGraph(dataset, coly, type)
                .attr("transform","rotate(-30)"); // can be left out for short values
                
      d3.select("#XVariable")
-          .text("Hour of Day");
+          .text("Month");
      
      // Add y axis with label        
      d3.select("#YWithLabel")
-          .call(d3.axisLeft(scaleY));
+          .call(d3.axisLeft(textY));
 
      d3.select("#YVariable")
-          .text(coly);
+          .text("Day");
+
+
+     // Define diverging colorscale    
+     var divColor = d3.scaleLinear()
+          .domain([ymin, ymax])
+          .range(["white", "orange"])
+          .interpolate(d3.interpolateRgb);
 
 
      // Define tooltip and its functions
@@ -130,48 +113,31 @@ function DrawGraph(dataset, coly, type)
      }
 
      function mouseOut (event,d){
+          console.log(DateToString(d[colx], "monthDay"));
           tooltip
           .style("visibility","hidden")
           }
 
      function mouseClick (event,d){
-          d3.select(event.currentTarget)
-          tooltip
-               .style("visibility","visible")
-               .style("width", chartWidth+margin.left+margin.right)
-               .text("")
+          location.href = "generalData?date=" + DateToString(d.Time, "getParameter");
      }
 
 
      // Add bars
      d3.selectAll(".bars").remove()
 
-     if(type=="bar")
-     {
           svg.selectAll("bars")
                .data(dataset)
                .enter()
                .append("rect")
                .attr("class", function(d) {return "bars"})
-               .attr("x", function(d){return scaleX(d[colx]);})
-               .attr("y", function(d) {return scaleY(d[coly]);})
-               .attr("width",scaleX.bandwidth())
-               .attr("height",function(d){return chartHeight - scaleY(d[coly]);})
-               .attr("fill", function(d){ return d[colx] < 15 && d[colx]> 1? "#6600cc" : "#FF9900"})             
+               .attr("x", function(d){return textX(DateToString(d[colx], "monthYear"))+12;})
+               .attr("y", function(d) {return textY(DateToString(d[colx],"day"));})
+               .attr("width", boxSize)
+               .attr("height", boxSize)
+               .attr("fill", function(d) { return divColor(d[coly]);})          
                .on("mouseover",mouseOver)
                .on("mouseout",mouseOut)
                .on("click",mouseClick);
-
-
-          // Add line at average with legend
-          let plotAvg = scaleY(avg)
-          svg.select("#AverageLineChart")
-               .attr("y1", plotAvg)
-               .attr("y2", plotAvg);
-
-          svg.select("#AverageLineText")
-               .text("Average: "+ Math.round(avg*100)/100)
-
-          d3.selectAll(".avgLine").raise().style("visibility", "visible");
-     }
+     
 }
