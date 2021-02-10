@@ -12,6 +12,9 @@ To use this project, first clone the repo on your device using the command below
 
 ```git clone https://github.com/JakaJenko/Visualization_of_Biological_Data_Biosensor_data.git```
 
+If needed, an environment including all dependencies can be found in the file environment.yml. For example with conda:
+```conda env create -f environment.yml```
+
 In the corresponding folder start the application by the command:
 
 ```python3 Server/FlaskServer.py```
@@ -38,3 +41,7 @@ On this page it is possible to correlate two variables to each other. The result
 ## Pattern data
 
 For the plots showed on this page, all available data is taken into account to display certain patterns. The data is used to identify the average values for the given hour of the day for one variable. The main aim is showing when the user is more active on the day or showing trends of the variables at a certain time.
+
+## Calendar
+
+Again, all available data is taken into account. Each day in the dataset is visualized as a box in a calendar structure and filled according to the average value of the selected variable. The darker the color, the higher the value. Clicking on a day leads to the general information page of this day, thus showing the exact values for each hour.
