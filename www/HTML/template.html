@@ -24,6 +24,23 @@
     </style>
 </head>
 
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    document.getElementById("btn_home").classList.remove("w3-text-teal");
+    document.getElementById("btn_generalData").classList.remove("w3-text-teal");
+    document.getElementById("btn_correlatedData").classList.remove("w3-text-teal");
+    document.getElementById("btn_patternData").classList.remove("w3-text-teal")
+    document.getElementById("btn_calendar").classList.remove("w3-text-teal");
+
+    addActivateClass(document.getElementById("btn_" + window.location.href.split("/").pop()));
+  });
+
+  function addActivateClass(element) {
+    var classString = element.className; // returns the string of all the classes for myDiv
+    var newClass = classString.concat(" w3-text-teal"); // Adds the class "main__section" to the string (notice the leading space)
+    element.className = newClass; // sets className to the new string
+  }
+</script>
 
 <body id="body" class="w3-light-grey w3-content" style="max-width:1600px; position:relative; min-height:100vh;">
 <div id="contentWrap" style="padding-bottom: 200px;">
@@ -38,11 +55,11 @@
     <p class="w3-text-grey">Template by W3.CSS</p>
   </div>
   <div class="w3-bar-block">
-    <a href="{{ url_for('home') }}" class="w3-bar-item w3-button w3-padding w3-text-teal"><i class="fa fa-user fa-fw w3-margin-right"></i>HOME</a>
-    <a href="{{ url_for('generalData') }}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>GENERAL INFORMATION</a>
-    <a href="{{ url_for('correlatedData') }}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>CORRELATED DATA</a>
-    <a href="{{ url_for('patternData') }}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>PATTERN DATA</a>
-    <a href="{{ url_for('calendar') }}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>CALENDAR</a>
+    <a href="{{ url_for('home') }}" id="btn_home" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>HOME</a>
+    <a href="{{ url_for('generalData') }}" id="btn_generalData" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>GENERAL INFORMATION</a>
+    <a href="{{ url_for('correlatedData') }}" id="btn_correlatedData" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>CORRELATED DATA</a>
+    <a href="{{ url_for('patternData') }}" id="btn_patternData" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>PATTERN DATA</a>
+    <a href="{{ url_for('calendar') }}" id="btn_calendar" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>CALENDAR</a>
   </div>
 </nav>
 

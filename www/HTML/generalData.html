@@ -11,7 +11,7 @@
         var urlParams = parseURLParams(window.location.href);
         console.log(urlParams);
 
-        if(urlParams.date != null)
+        if(urlParams != undefined && urlParams["date"] != null)
         {
             console.log(urlParams.date[0]);
 
