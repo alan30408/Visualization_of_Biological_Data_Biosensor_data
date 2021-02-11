@@ -47,21 +47,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 function DrawGraph(dataset, coly)
 {
-     dataset = dataset["data"]
+     // load min and max value from data loading
+     ymin = dataset["min"][coly];
+     ymax = dataset["max"][coly];
 
-     // Find maximum value for our y attribute, as well as the average
-     let ymax = -Infinity;
-     let ymin = Infinity;
-
-     for (row=0;row<dataset.length;row++){ 
-          if(dataset[row][coly] > ymax){
-               ymax = dataset[row][coly]
-          }
-          if(dataset[row][coly] < ymin){
-               if (dataset[row][coly] > 0)
-                    {ymin = dataset[row][coly]}
-          }
-     }
+     dataset = dataset["data"];
 
      // Define axes
      let textX = d3.scaleBand()
@@ -113,7 +103,7 @@ function DrawGraph(dataset, coly)
      }
 
      function mouseOut (event,d){
-          console.log(DateToString(d[colx], "monthDay"));
+          //console.log(DateToString(d[colx], "monthDay"));
           tooltip
           .style("visibility","hidden")
           }

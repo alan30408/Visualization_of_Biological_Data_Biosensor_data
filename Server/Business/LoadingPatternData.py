@@ -21,4 +21,16 @@ class LoadingPatternData:
         df['Calories'] = df['Calories'].apply(lambda x: x*60)
         df['Steps'] = df['Steps'].apply(lambda x: x*60)
 
-        return df[["Time", variable]]
+        min_values = {}
+        max_values = {}
+        average_values = {}
+
+        s = pd.Series(df[variable])
+        min_values[variable] = s.min()
+        max_values[variable] = s.max()
+        average_values[variable] = s.mean()
+
+        data = [df[["Time", variable]], min_values, max_values, average_values]
+        return data
+
+        #return df[["Time", variable]]

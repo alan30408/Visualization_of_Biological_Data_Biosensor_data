@@ -111,6 +111,7 @@ class LoadingVarData:
         variables: 'Times', 'Calories', 'HR', 'Temperature', 'Steps'
         """
         data = LoadingVarData().LoadDailyData()
+        data = data[0]
 
         #dictionary to save information which should be displayed
         home_val = {}
@@ -150,4 +151,15 @@ class LoadingVarData:
         df['Calories'] = df['Calories'].apply(lambda x: x*60*24)
         df['Steps'] = df['Steps'].apply(lambda x: x*60*24)
 
-        return df
+        min_values = {}
+        max_values = {}
+        average_values = {}
+
+        for i in df:
+            if i != "Unnamed: 0" and i !="Time":
+                s = pd.Series(df[i])
+                min_values[i] = s.min()
+                max_values[i] = s.max()
+                average_values[i] = s.mean()
+        data = [df, min_values, max_values, average_values]
+        return data

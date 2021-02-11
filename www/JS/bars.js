@@ -69,25 +69,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 //Type = "bar", "line"
 function DrawGraph(dataset, coly, type, dateFormat)
 {
-     dataset = dataset["data"];
-
-     // Find minimum and maximum value for our y attribute, as well as the average
-     let ymin = Infinity;
-     let ymax = -Infinity;
-     let sum = 0;
-
-     for (row=0;row<dataset.length;row++){ 
-          if(dataset[row][coly] < ymin){
-               ymin = dataset[row][coly]
-          }
-          if(dataset[row][coly] > ymax){
-               ymax = dataset[row][coly]
-          }
-          sum += parseInt(dataset[row][coly])
-     }
+     // load min, max and average values from data loading
+     ymin = dataset["min"][coly];
+     ymax = dataset["max"][coly];
+     avg = dataset["avg"][coly];
      
-     let avg = sum/dataset.length;
-
+     dataset = dataset["data"];
 
      // Define axes
      let textX = d3.scaleBand()

@@ -93,13 +93,13 @@ def LoadPatternData():
     variable = request.args.get('variable')
 
     data = loadingPatternData.LoadPatternData(variable)
-    return json.dumps({"data": json.loads(data.to_json(orient = "records"))})
+    return json.dumps({"data": json.loads(data[0].to_json(orient = "records")), "min": data[1], "max": data[2], "avg": data[3]})
 
 
 @app.route('/LoadDailyData')
 def LoadDailyData():
     data = loadingVarData.LoadDailyData()
-    return json.dumps({"data": json.loads(data.to_json(orient = "records"))})
+    return json.dumps({"data": json.loads(data[0].to_json(orient = "records")), "min": data[1], "max": data[2], "avg": data[3]})
 
 
 @app.route('/barChart')
