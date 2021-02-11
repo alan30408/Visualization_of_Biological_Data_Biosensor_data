@@ -76,6 +76,14 @@ function DrawGraph(dataset, coly, type)
 
      dataset = dataset["data"]
 
+     // set label
+	var label_unit = {
+		"Temperature": "Temperature (F)",
+		"Calories": "Calories (kcal)",
+		"HR": "HR (BPM)",
+		"Steps": "Steps (Number of steps)"
+	}
+
      // Define axes
      let scaleX = d3.scaleBand()
           .domain(dataset.map(function(d) { return d[colx]; }))
@@ -102,7 +110,7 @@ function DrawGraph(dataset, coly, type)
           .call(d3.axisLeft(scaleY));
 
      d3.select("#YVariable")
-          .text(coly);
+          .text(label_unit[coly]);
 
      // Define diverging colorscale    
      var divColor = d3.scaleLinear()

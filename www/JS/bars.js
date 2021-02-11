@@ -73,8 +73,16 @@ function DrawGraph(dataset, coly, type, dateFormat)
      ymin = dataset["min"][coly];
      ymax = dataset["max"][coly];
      avg = dataset["avg"][coly];
-     
+
      dataset = dataset["data"];
+
+     // set label
+	var label_unit = {
+		"Temperature": "Temperature (F)",
+		"Calories": "Calories (kcal)",
+		"HR": "HR (BPM)",
+		"Steps": "Steps (Number of steps)"
+	};
 
      // Define axes
      let textX = d3.scaleBand()
@@ -107,7 +115,7 @@ function DrawGraph(dataset, coly, type, dateFormat)
           .call(d3.axisLeft(scaleY));
 
      d3.select("#YVariable")
-          .text(coly);
+          .text(label_unit[coly]);
 
 
      // Define diverging colorscale    

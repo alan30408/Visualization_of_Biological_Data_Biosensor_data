@@ -57,7 +57,7 @@ function correlation_plot(variables) {
 		"Temperature": "Temperature (F)",
 		"Calories": "Calories (kcal)",
 		"HR": "HR (BPM)",
-		"Steps": "Steps (steps)"
+		"Steps": "Steps (Number of steps)"
 	}
 	
 	// counting number of point in cell
@@ -82,9 +82,6 @@ function correlation_plot(variables) {
 		count[index]["count"]+=1
 
 	}
-
-	var header = d3.select("#title")
-		.html("<h3>1000 random number between 0 and 100</h3><br/>To get new data set refresh the page (use ctrl+f5 to clear the cashe)");
 
 	// X label: x-axis label
 	var x_label = d3.scaleLinear()

@@ -10,8 +10,8 @@
         data = LoadData("Steps,HR,Calories", null, null, method="home");
         document.getElementById("date").textContent = "Random date: " + data["Time"].toString();
         document.getElementById("steps").textContent = "Steps made: " + data["Steps"].toString();
-        document.getElementById("HR").textContent = "Average HR: " + data["HR"].toString();
-        document.getElementById("calories").textContent = "Burnt Calories: " + data["Calories"].toString();
+        document.getElementById("HR").textContent = "Average HR (BPM): " + data["HR"].toString();
+        document.getElementById("calories").textContent = "Burnt Calories (kcal): " + data["Calories"].toString();
         document.getElementById("addinf").textContent = data["add_inf"].toString();
     });
 </script>
