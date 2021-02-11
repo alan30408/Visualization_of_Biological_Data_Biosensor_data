@@ -26,7 +26,7 @@ app.config['DEBUG'] = True
 
 @app.route('/')
 def index():
-    return redirect(url_for('base'))
+    return redirect(url_for('home'))
 
 @app.route('/base')
 def base():

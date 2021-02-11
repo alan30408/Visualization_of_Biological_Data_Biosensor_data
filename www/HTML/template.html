@@ -32,7 +32,7 @@
     document.getElementById("btn_patternData").classList.remove("w3-text-teal")
     document.getElementById("btn_calendar").classList.remove("w3-text-teal");
 
-    addActivateClass(document.getElementById("btn_" + window.location.href.split("/").pop()));
+    addActivateClass(document.getElementById("btn_" + window.location.href.split("/").pop().split("?")[0]));
   });
 
   function addActivateClass(element) {
